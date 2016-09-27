@@ -3,5 +3,26 @@ input.form-control {
 }
 
 body {
-    padding-top: 36px;
+    padding: 60px 0px;
+}
+
+.navbar-default {
+    background-color: #337ab7;
+}
+
+.glyphicon {
+    color: #FFF;
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+}
+
+.navbar-link.pull-right {
+    line-height: 50px;
+}
+
+.navbar-brand {
+    padding: 0px;
+    line-height: 50px;
 }
