@@ -6,7 +6,20 @@ body {
     padding: 60px 0px;
 }
 
-.container>.navbar-header {
+.navbar-header {
     width: 100%;
-    margin: 0px;
+    margin: 0px !important;
+}
+
+.widget-container {
+    position: relative;
+}
+
+.widget-container .widget-control {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: #FFF;
+    padding: 2px 5px;
+    border-bottom-left-radius: 5px;
 }
