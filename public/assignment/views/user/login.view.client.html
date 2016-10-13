@@ -2,12 +2,18 @@
     <h1>Login</h1>
     <input type="text"
            class="form-control"
-           placeholder="username"/>
+           placeholder="username"
+           ng-model="model.user.username"
+    />
     <input type="password"
            class="form-control"
-           placeholder="password"/>
+           placeholder="password"
+           ng-model="model.user.password"
+    />
     <a class="btn btn-primary btn-block"
-       href="#/profile">Login</a>
+       ng-click="model.login(model.user.username, model.user.password)"
+    >Login</a>
     <a class="btn btn-success btn-block"
-       href="#/register">Register</a>
+       href="#/register"
+    >Register</a>
 </div>

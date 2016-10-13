@@ -5,19 +5,25 @@
 
     function PageService() {
         var pages = [
-            {"_id": "321", "name": "Post 1", "websiteId": "456"},
-            {"_id": "432", "name": "Post 2", "websiteId": "456"},
-            {"_id": "543", "name": "Post 3", "websiteId": "456"},
+            {_id: "321", name: "Post 1", websiteId: "456"},
+            {_id: "432", name: "Post 2", websiteId: "456"},
+            {_id: "543", name: "Post 3", websiteId: "456"},
         ];
 
-        var fac = {};
+        return {
+            createPage: _createPage,
+            findPageByWebsiteId: _findPageByWebsiteId,
+            findPageById: _findPageById,
+            updatePage: _updatePage,
+            deletePage: _deletePage,
+        };
 
-        fac.createPage = function (websiteId, page) {
+        function _createPage(websiteId, page) {
             page.websiteId = websiteId;
             pages.push(page);
         }
 
-        fac.findPageByWebsiteId = function (websiteId) {
+        function _findPageByWebsiteId(websiteId) {
             var ret = [];
             for (var page of pages) {
                 if (page.websiteId === websiteId) {
@@ -27,7 +33,7 @@
             return ret;
         }
 
-        fac.findPageById = function (pageId) {
+        function _findPageById(pageId) {
             for (var page of pages) {
                 if (page._id === pageId) {
                     return page;
@@ -36,7 +42,7 @@
             return null;
         }
 
-        fac.updatePage = function (pageId, page) {
+        function _updatePage(pageId, page) {
             for (var i = 0; i < pages.length; i++) {
                 if (pages[i]._id === pageId) {
                     pages[i] = page;
@@ -45,7 +51,7 @@
             }
         }
 
-        fac.deletePage = function (pageId) {
+        function _deletePage(pageId) {
             for (var i = 0; i < pages.length; i++) {
                 if (pages[i]._id === pageId) {
                     pages.splice(i, 1);
@@ -53,7 +59,5 @@
                 }
             }
         }
-
-        return fac;
     }
 })();
