@@ -2,13 +2,13 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
-                <a href="#/profile" class="navbar-link">
+                <a href="#/user/{{model.userId}}" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </p>
-            <a href="#" class="navbar-brand">Websites</a>
+            <span class="navbar-brand">Websites</span>
             <p class="navbar-text pull-right">
-                <a href="#/website-new" class="navbar-link">
+                <a href="#/user/{{model.userId}}/website/new" class="navbar-link">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </p>
@@ -20,8 +20,8 @@
 <div class="container-fluid">
     <div class="col-sm-12">
         <div class="form-group" ng-repeat="website in model.websites">
-            <a href="#/page-list">{{website.name}}</a>
-            <a href="#/website-edit" class="pull-right">
+            <a href="#/user/{{model.userId}}/website/{{website._id}}/page">{{website.name}}</a>
+            <a href="#/user/{{model.userId}}/website/{{website._id}}" class="pull-right">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
         </div>
@@ -31,7 +31,7 @@
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <p class="navbar-text pull-right">
-            <a href="#/profile" class="navbar-link">
+            <a href="#/user/{{model.userId}}" class="navbar-link">
                 <span class="glyphicon glyphicon-user"></span>
             </a>
         </p>
