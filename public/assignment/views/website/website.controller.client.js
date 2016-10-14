@@ -11,8 +11,10 @@
         vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
     }
 
-    function NewWebsiteController() {
-
+    function NewWebsiteController($routeParams, WebsiteService) {
+        var vm = this;
+        vm.userId = $routeParams.uid;
+        vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
     }
 
     function EditWebsiteController($location, $routeParams, WebsiteService) {

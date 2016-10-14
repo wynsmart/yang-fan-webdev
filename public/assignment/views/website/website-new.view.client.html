@@ -2,26 +2,26 @@
     <div class="navbar-header">
         <div class="col-md-4 hidden-xs hidden-sm">
             <p class="navbar-text pull-left">
-                <a href="#/website-list" class="navbar-link">
+                <a href="#/user/{{model.userId}}/website" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </p>
             <span class="navbar-brand">Websites</span>
             <p class="navbar-text pull-right">
-                <a href="#/website-list" class="navbar-link">
+                <a href="#/user/{{model.userId}}/website/new" class="navbar-link">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </p>
         </div>
         <div class="col-md-8">
             <p class="navbar-text pull-left visible-xs visible-sm">
-                <a href="#/website-list" class="navbar-link">
+                <a href="#/user/{{model.userId}}/website" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </p>
             <span class="navbar-brand">New Website</span>
             <p class="navbar-text pull-right">
-                <a href="#/website-list" class="navbar-link">
+                <a ng-click="model.updateWebsite(model.website)" class="navbar-link">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </p>
@@ -32,26 +32,8 @@
 
 <div class="container-fluid">
     <div class="col-md-4 hidden-xs hidden-sm">
-        <div class="form-group">
-            <a href="#/page-list">Address Book App</a>
-            <a href="#/website-edit" class="pull-right">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
-        </div>
-        <div class="form-group">
-            <a href="#/page-list">Blogger</a>
-            <a href="#/website-edit" class="pull-right">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
-        </div>
-        <div class="form-group">
-            <a href="#/page-list">Blogging App</a>
-            <a href="#/website-edit" class="pull-right">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
-        </div>
-        <div class="form-group">
-            <a href="#/page-list">Script Testing App</a>
+        <div class="form-group" ng-repeat="website in model.websites">
+            <a href="#/page-list">{{website.name}}</a>
             <a href="#/website-edit" class="pull-right">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>

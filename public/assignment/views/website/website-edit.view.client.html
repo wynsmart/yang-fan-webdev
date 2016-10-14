@@ -15,7 +15,7 @@
         </div>
         <div class="col-md-8">
             <p class="navbar-text pull-left visible-xs visible-sm">
-                <a href="#/website-list" class="navbar-link">
+                <a href="#/user/{{model.userId}}/website" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </p>
@@ -32,7 +32,7 @@
 <div class="container-fluid">
     <div class="col-md-4 hidden-xs hidden-sm">
         <div class="form-group" ng-repeat="website in model.websites">
-            <a href="#/page-list">{{model.website.name}}</a>
+            <a href="#/page-list">{{website.name}}</a>
             <a href="#/website-edit" class="pull-right">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
