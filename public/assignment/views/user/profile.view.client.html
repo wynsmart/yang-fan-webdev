@@ -21,7 +21,7 @@
                    class="form-control"
                    id="username"
                    placeholder="Username"
-                   ng-model="model.user.username"
+                   ng-model="model.shared.user.username"
             />
         </div>
         <div class="form-group">
@@ -30,7 +30,7 @@
                    class="form-control"
                    id="email"
                    placeholder="alice@wonderland.com"
-                   ng-model="model.user.email"
+                   ng-model="model.shared.user.email"
             />
         </div>
         <div class="form-group">
@@ -39,7 +39,7 @@
                    class="form-control"
                    id="first-name"
                    placeholder="Alice"
-                   ng-model="model.user.firstName"
+                   ng-model="model.shared.user.firstName"
             />
         </div>
         <div class="form-group">
@@ -48,23 +48,14 @@
                    class="form-control"
                    id="last-name"
                    placeholder="Wonderland"
-                   ng-model="model.user.lastName"
+                   ng-model="model.shared.user.lastName"
             />
         </div>
     </form>
 
     <a class="btn btn-primary btn-block"
-       href="#/user/{{model.user._id}}/website">Websites</a>
+       href="#/user/{{model.shared.user._id}}/website">Websites</a>
     <a class="btn btn-danger btn-block"
        href="#/login">Logout</a>
 </div>
-
-<nav class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container-fluid">
-        <p class="navbar-text pull-right">
-            <a href="#/user/{{model.user._id}}" class="navbar-link">
-                <span class="glyphicon glyphicon-user"></span>
-            </a>
-        </p>
-    </div>
-</nav>
+<footer></footer>

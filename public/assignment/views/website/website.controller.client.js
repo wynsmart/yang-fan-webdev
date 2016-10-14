@@ -5,34 +5,41 @@
         .controller("NewWebsiteController", NewWebsiteController)
         .controller("EditWebsiteController", EditWebsiteController);
 
-    function WebsiteListController($routeParams, WebsiteService) {
+    function WebsiteListController($routeParams, SharedService, WebsiteService) {
         var vm = this;
-        vm.userId = $routeParams.uid;
-        vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
+        vm.shared = SharedService;
+        vm.websites = WebsiteService.findWebsitesByUser(vm.shared.user._id);
     }
 
-    function NewWebsiteController($routeParams, WebsiteService) {
+    function NewWebsiteController($routeParams, SharedService, WebsiteService) {
         var vm = this;
-        vm.userId = $routeParams.uid;
-        vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
+        vm.shared = SharedService;
+        vm.website = {};
+        vm.websites = WebsiteService.findWebsitesByUser(vm.shared.user._id);
+        vm.createWebsite = _createWebsite;
+
+        function _createWebsite() {
+            WebsiteService.createWebsite(vm.shared.user._id, vm.website);
+            vm.websites.push(vm.website);
+            vm.website = {};
+        }
     }
 
-    function EditWebsiteController($location, $routeParams, WebsiteService) {
+    function EditWebsiteController($location, $routeParams, SharedService, WebsiteService) {
         var vm = this;
-        vm.userId = $routeParams.uid;
+        vm.shared = SharedService;
         vm.website = WebsiteService.findWebsiteById($routeParams.wid);
-        vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
+        vm.websites = WebsiteService.findWebsitesByUser(vm.shared.user._id);
         vm.updateWebsite = _updateWebsite;
         vm.deleteWebsite = _deleteWebsite;
 
         function _updateWebsite(website) {
             WebsiteService.updateWebsite(vm.website._id, website);
-            $location.url(`/user/${vm.userId}/website`);
         }
 
         function _deleteWebsite() {
             WebsiteService.deleteWebsite(vm.website._id);
-            $location.url(`/user/${vm.userId}/website`);
+            $location.url(`/user/${vm.shared.user._id}/website`);
         }
     }
 

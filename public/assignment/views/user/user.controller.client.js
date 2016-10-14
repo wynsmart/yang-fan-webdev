@@ -5,52 +5,54 @@
         .controller("RegisterController", RegisterController)
         .controller("ProfileController", ProfileController);
 
-    function LoginController($location, UserService) {
+    function LoginController($location, SharedService, UserService) {
         var vm = this;
-        vm.formUser = {};
+        vm.shared = SharedService;
+        vm.user = {};
         vm.login = _login;
 
         function _login() {
-            vm.user = UserService.findUserByCredentials(vm.formUser.username, vm.formUser.password);
-            if (vm.user) {
-                $location.url(`/user/${vm.user._id}`);
+            vm.shared.user = UserService.findUserByCredentials(vm.user.username, vm.user.password);
+            if (vm.shared.user) {
+                $location.url(`/user/${vm.shared.user._id}`);
             } else {
                 vm.alert = "Incorrect username or password";
             }
         }
     }
 
-    function RegisterController($location, UserService) {
+    function RegisterController($location, SharedService, UserService) {
         var vm = this;
-        vm.formUser = {};
+        vm.shared = SharedService;
+        vm.user = {};
         vm.register = _register;
 
         function _register() {
-            if (vm.formUser.password !== vm.formUser.password2){
+            if (vm.user.password !== vm.user.password2){
                 vm.alert = "The two passwords are not identical";
                 return;
             }
-            if (!vm.formUser.password){
+            if (!vm.user.password){
                 vm.alert = "Password cannot be empty";
                 return;
             }
-            var user = {
+            vm.shared.user = {
                 _id: String(Date.now()),
-                username: vm.formUser.username,
-                password: vm.formUser.password,
+                username: vm.user.username,
+                password: vm.user.password,
             };
-            UserService.createUser(user);
-            $location.url(`/user/${user._id}`);
+            UserService.createUser(vm.shared.user);
+            $location.url(`/user/${vm.shared.user._id}`);
         }
     }
 
-    function ProfileController($routeParams, UserService) {
+    function ProfileController($routeParams, SharedService, UserService) {
         var vm = this;
-        vm.user = UserService.findUserById($routeParams.uid);
+        vm.shared = SharedService;
         vm.updateUser = _updateUser;
 
         function _updateUser(){
-            UserService.updateUser(vm.user._id, vm.user);
+            UserService.updateUser(vm.shared.user._id, vm.shared.user);
         }
     }
 
