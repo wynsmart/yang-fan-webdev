@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
-                <a href="#/page-list" class="navbar-link">
+                <a href="#/user/{{model.shared.user._id}}/website/{{model.websiteId}}/page" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </p>
@@ -18,52 +18,13 @@
 
 
 <div class="container-fluid">
-    <div class="form-group widget-container">
-        <h1 class="">GIZMODO</h1>
+    <div class="form-group widget-container" ng-repeat="widget in model.widgets">
+        <ng-include src="model.getSrcByWidget(widget)"></ng-include>
         <div class="widget-control">
-            <a href="#/widget-heading">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
-            <a href="#/widget-heading">
-                <span class="glyphicon glyphicon-align-justify"></span>
-            </a>
-        </div>
-    </div>
-    <div class="form-group widget-container">
-        <img src="http://www.androidcentral.com/sites/androidcentral.com/files/styles/w550h500/public/wallpapers/street-lights-1zr.jpg?itok=16E7ayiL"
-             width="100%">
-        <div class="widget-control">
-            <a href="#/widget-image">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
-            <a href="#/widget-image">
-                <span class="glyphicon glyphicon-align-justify"></span>
-            </a>
-        </div>
-    </div>
-    <div class="form-group widget-container">
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid amet, atque corporis deserunt <a
-                href="#">dolor doloremque</a> earum error facere modi necessitatibus odit officiis perspiciatis porro reiciendis repellendus soluta temporibus vel, voluptates.
-        </div>
-        <div class="widget-control">
-            <a href="#">
-                <span class="glyphicon glyphicon-cog"></span>
-            </a>
-            <a href="#">
-                <span class="glyphicon glyphicon-align-justify"></span>
-            </a>
-        </div>
-    </div>
-    <div class="form-group widget-container">
-        <div class="embed-responsive embed-responsive-16by9">
-            <iframe id="ytplayer" type="text/html" class="embed-responsive-item"
-                    src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
-                    frameborder="0">
-            </iframe>
-        </div>
-        <div class="widget-control">
-            <a href="#/widget-youtube">
+            <a href="#/user/{{model.shared.user._id
+                    }}/website/{{model.websiteId
+                    }}/page/{{model.pageId
+                    }}/widget/{{widget._id}}">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
             <a href="#/widget-youtube">

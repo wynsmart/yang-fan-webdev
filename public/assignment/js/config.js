@@ -3,7 +3,9 @@
         .module("WebAppMaker")
         .config(Config);
 
-    function Config($routeProvider) {
+    function Config($sceProvider, $routeProvider) {
+        $sceProvider
+            .enabled(false);
         $routeProvider
             .when("/login", {
                 templateUrl: "views/user/login.view.client.html",
@@ -52,6 +54,11 @@
             })
             .when("/user/:uid/website/:wid/page/:pid/widget", {
                 templateUrl: "views/widget/widget-list.view.client.html",
+                controller: "WidgetListController",
+                controllerAs: "model",
+            })
+            .when("/user/:uid/website/:wid/page/:pid/widget/:wgid", {
+                templateUrl: "views/widget/widget-edit.view.client.html",
                 controller: "WidgetListController",
                 controllerAs: "model",
             })

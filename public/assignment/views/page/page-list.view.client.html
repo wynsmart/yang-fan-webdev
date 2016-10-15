@@ -2,13 +2,13 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
-                <a href="#/website-list" class="navbar-link">
+                <a href="#/user/{{model.shared.user._id}}/website" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </p>
             <span class="navbar-brand">Pages</span>
             <p class="navbar-text pull-right">
-                <a href="#/page-new" class="navbar-link">
+                <a href="#/user/{{model.shared.user._id}}/website/{{model.websiteId}}/page/new" class="navbar-link">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </p>
@@ -18,33 +18,11 @@
 
 
 <div class="container-fluid">
-    <div class="form-group">
-        <a href="#/widget-list">Blog Post</a>
-        <a href="#/page-edit" class="pull-right">
-            <span class="glyphicon glyphicon-cog"></span>
+    <div class="form-group" ng-repeat="page in model.pages">
+        <a href="#/user/{{model.shared.user._id}}/website/{{model.websiteId}}/page/{{page._id}}/widget">
+            {{page.name}}
         </a>
-    </div>
-    <div class="form-group">
-        <a href="#/widget-list">Blogs</a>
-        <a href="#/page-edit" class="pull-right">
-            <span class="glyphicon glyphicon-cog"></span>
-        </a>
-    </div>
-    <div class="form-group">
-        <a href="../widget/widget-list.html">Home</a>
-        <a href="page-edit.html" class="pull-right">
-            <span class="glyphicon glyphicon-cog"></span>
-        </a>
-    </div>
-    <div class="form-group">
-        <a href="#/widget-list">About</a>
-        <a href="#/page-edit" class="pull-right">
-            <span class="glyphicon glyphicon-cog"></span>
-        </a>
-    </div>
-    <div class="form-group">
-        <a href="#/widget-list">Contact Us</a>
-        <a href="#/page-edit" class="pull-right">
+        <a href="#/user/{{model.shared.user._id}}/website/{{model.websiteId}}/page/{{page._id}}" class="pull-right">
             <span class="glyphicon glyphicon-cog"></span>
         </a>
     </div>

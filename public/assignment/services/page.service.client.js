@@ -12,7 +12,7 @@
 
         return {
             createPage: _createPage,
-            findPageByWebsiteId: _findPageByWebsiteId,
+            findPagesByWebsiteId: _findPagesByWebsiteId,
             findPageById: _findPageById,
             updatePage: _updatePage,
             deletePage: _deletePage,
@@ -23,7 +23,7 @@
             pages.push(page);
         }
 
-        function _findPageByWebsiteId(websiteId) {
+        function _findPagesByWebsiteId(websiteId) {
             var ret = [];
             for (var page of pages) {
                 if (page.websiteId === websiteId) {
