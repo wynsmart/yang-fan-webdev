@@ -22,6 +22,7 @@
             WebsiteService.createWebsite(vm.shared.user._id, vm.website);
             vm.websites.push(vm.website);
             vm.website = {};
+            console.log('created website', vm.website);
         }
     }
 
@@ -35,11 +36,13 @@
 
         function updateWebsite(website) {
             WebsiteService.updateWebsite(vm.website._id, website);
+            console.log('updated website', vm.website);
         }
 
         function deleteWebsite() {
             WebsiteService.deleteWebsite(vm.website._id);
             $location.url(vm.shared.getRoute('website_list'));
+            console.log('deleted website', vm.website);
         }
     }
 

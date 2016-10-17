@@ -18,6 +18,7 @@
             } else {
                 vm.error = "Incorrect username or password";
             }
+            console.log('logged in user', vm.shared.user);
         }
     }
 
@@ -43,6 +44,7 @@
             };
             UserService.createUser(vm.shared.user);
             $location.url(vm.shared.getRoute('profile', {uid: vm.shared.user._id}));
+            console.log('registered user', vm.shared.user);
         }
     }
 
@@ -53,6 +55,7 @@
 
         function updateUser(){
             UserService.updateUser(vm.shared.user._id, vm.shared.user);
+            console.log('updated user', vm.shared.user);
         }
     }
 

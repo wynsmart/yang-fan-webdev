@@ -17,7 +17,7 @@
         vm.createPage = createPage;
 
         function createPage() {
-
+            console.log('created page', vm.page);
         }
     }
 
@@ -30,10 +30,11 @@
 
         function updatePage() {
             // PageService.updatePage();
+            console.log('updated page', vm.page);
         }
 
         function deletePage() {
-
+            console.log('deleted page', vm.page);
         }
     }
 

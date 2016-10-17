@@ -24,9 +24,21 @@
         }
     }
 
-    function NewWidgetController($routeParams, SharedService) {
+    function NewWidgetController($location, $routeParams, SharedService, WidgetService) {
         var vm = this;
         vm.shared = SharedService;
+        vm.pageId = $routeParams.pid;
+        vm.widget = {
+            _id: String(Date.now()),
+        };
+        vm.createWidget = createWidget;
+
+        function createWidget(widgetType) {
+            vm.widget.widgetType = widgetType.toUpperCase();
+            WidgetService.createWidget(vm.pageId, vm.widget);
+            console.log('created widget', vm.widget);
+            $location.url(vm.shared.getRoute('widget_edit', {wgid: vm.widget._id}));
+        }
     }
 
     function EditWidgetController($routeParams, SharedService, WidgetService) {
@@ -47,11 +59,11 @@
         }
 
         function updateWidget() {
-
+            console.log('updated widget', vm.widget);
         }
 
         function deleteWidget() {
-
+            console.log('deleted widget', vm.widget);
         }
     }
 
