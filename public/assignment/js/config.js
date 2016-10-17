@@ -3,10 +3,8 @@
         .module("WebAppMaker")
         .config(Config);
 
-    function Config($sceProvider, $routeProvider, SharedServiceProvider) {
+    function Config($routeProvider, SharedServiceProvider) {
         var routeMap = SharedServiceProvider.$get().routeMap;
-        $sceProvider
-            .enabled(false);
         $routeProvider
             .when(routeMap.login, {
                 templateUrl: "views/user/login.view.client.html",
@@ -65,7 +63,7 @@
             })
             .when(routeMap.widget_edit, {
                 templateUrl: "views/widget/widget-edit.view.client.html",
-                controller: "WidgetListController",
+                controller: "EditWidgetController",
                 controllerAs: "model",
             })
             .otherwise({

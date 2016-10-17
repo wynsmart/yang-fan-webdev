@@ -20,7 +20,27 @@
 
 <div class="container-fluid">
     <div class="form-group widget-container" ng-repeat="widget in model.widgets">
-        <ng-include src="model.getTemplateSrc(widget)"></ng-include>
+        <div ng-switch="widget.widgetType">
+            <div ng-switch-when="HEADING">
+                <div class="h{{widget.size}}">{{widget.text}}</div>
+            </div>
+            <div ng-switch-when="HTML">
+                <div ng-bind-html="model.getSafeHTML(widget)"></div>
+            </div>
+            <div ng-switch-when="IMAGE">
+                <img ng-src="{{widget.url}}" width="{{widget.width}}">
+            </div>
+            <div ng-switch-when="YOUTUBE">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe id="ytplayer"
+                            ng-src="{{model.getYoutubeSrc(widget)}}"
+                            type="text/html"
+                            class="embed-responsive-item"
+                            frameborder="0"
+                    ></iframe>
+                </div>
+            </div>
+        </div>
         <div class="widget-control">
             <a href="#{{model.shared.getRoute('widget_edit', {wgid: widget._id})}}">
                 <span class="glyphicon glyphicon-cog"></span>

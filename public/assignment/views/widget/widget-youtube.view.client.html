@@ -1,8 +1,42 @@
-<div class="embed-responsive embed-responsive-16by9">
-    <iframe id="ytplayer"
-            src="{{model.getYoutubeSrc(widget)}}"
-            type="text/html"
-            class="embed-responsive-item"
-            frameborder="0"
-    ></iframe>
+<div class="form-group">
+    <label for="widget-name">Name</label>
+    <input type="text"
+           class="form-control"
+           id="widget-name"
+           placeholder="Widget Name"
+           ng-model="model.widget.name"
+    />
+</div>
+<div class="form-group">
+    <label for="widget-text">Text</label>
+    <input type="text"
+           class="form-control"
+           id="widget-text"
+           placeholder="Widget Title"
+           ng-model="model.widget.text"
+    />
+</div>
+<div class="form-group">
+    <label for="widget-url">URL</label>
+    <input type="text"
+           class="form-control"
+           id="widget-url"
+           placeholder="Widget URL"
+           ng-model="model.widget.url"
+    />
+</div>
+<div class="form-group">
+    <label for="widget-width">Width</label>
+    <input type="text"
+           class="form-control"
+           id="widget-width"
+           placeholder="Widget Width"
+           ng-model="model.widget.width"
+    />
+</div>
+<div class="form-group">
+    <a class="btn btn-danger btn-block"
+       href="widget-list.html"
+    >Delete
+    </a>
 </div>
