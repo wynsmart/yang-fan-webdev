@@ -8,9 +8,7 @@
     function WidgetListController($routeParams, SharedService, WidgetService) {
         var vm = this;
         vm.shared = SharedService;
-        vm.websiteId = $routeParams.wid;
-        vm.pageId = $routeParams.pid;
-        vm.widgets = WidgetService.findWidgetsByPageId(vm.pageId);
+        vm.widgets = WidgetService.findWidgetsByPageId($routeParams.pid);
         vm.getTemplateSrc = getTemplateSrc;
         vm.getYoutubeSrc = getYoutubeSrc;
 
@@ -33,8 +31,6 @@
     function NewWidgetController($routeParams, SharedService) {
         var vm = this;
         vm.shared = SharedService;
-        vm.websiteId = $routeParams.wid;
-        vm.pageId = $routeParams.pid;
     }
 
     function EditWidgetController(SharedService) {

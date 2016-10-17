@@ -8,9 +8,7 @@
     function PageListController($routeParams, SharedService, PageService) {
         var vm = this;
         vm.shared = SharedService;
-        vm.websiteId = $routeParams.wid;
-        vm.pageId = $routeParams.pid;
-        vm.pages = PageService.findPagesByWebsiteId(vm.websiteId);
+        vm.pages = PageService.findPagesByWebsiteId($routeParams.wid);
     }
 
     function NewPageController(SharedService) {
@@ -23,9 +21,10 @@
         }
     }
 
-    function EditPageController(SharedService, PageService) {
+    function EditPageController($routeParams, SharedService, PageService) {
         var vm = this;
         vm.shared = SharedService;
+        vm.page = PageService.findPageById($routeParams.pid);
         vm.updatePage = updatePage;
         vm.deletePage = deletePage;
 
