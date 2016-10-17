@@ -14,19 +14,19 @@
         ];
 
         return {
-            createWebsite: _createWebsite,
-            findWebsitesByUser: _findWebsitesByUser,
-            findWebsiteById: _findWebsiteById,
-            updateWebsite: _updateWebsite,
-            deleteWebsite: _deleteWebsite,
+            createWebsite: createWebsite,
+            findWebsitesByUser: findWebsitesByUser,
+            findWebsiteById: findWebsiteById,
+            updateWebsite: updateWebsite,
+            deleteWebsite: deleteWebsite,
         };
 
-        function _createWebsite(userId, website) {
+        function createWebsite(userId, website) {
             website.developerId = userId;
             websites.push(website);
         }
 
-        function _findWebsitesByUser(userId) {
+        function findWebsitesByUser(userId) {
             var ret = [];
             for (var website of websites) {
                 if (website.developerId === userId) {
@@ -36,7 +36,7 @@
             return ret;
         }
 
-        function _findWebsiteById(websiteId) {
+        function findWebsiteById(websiteId) {
             for (var website of websites) {
                 if (website._id === websiteId) {
                     return website;
@@ -45,7 +45,7 @@
             return null;
         }
 
-        function _updateWebsite(websiteId, website) {
+        function updateWebsite(websiteId, website) {
             for (var i = 0; i < websites.length; i++) {
                 if (websites[i]._id === websiteId) {
                     websites[i] = website;
@@ -54,7 +54,7 @@
             }
         }
 
-        function _deleteWebsite(websiteId) {
+        function deleteWebsite(websiteId) {
             for (var i = 0; i < websites.length; i++) {
                 if (websites[i]._id === websiteId) {
                     websites.splice(i, 1);

@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <div class="alert alert-danger"
          role="alert"
-         ng-show="model.alert"
-    >{{model.alert}}
+         ng-show="model.error"
+    >{{model.error}}
     </div>
     <h1>Login</h1>
     <input type="text"
@@ -20,7 +20,7 @@
     >Login
     </a>
     <a class="btn btn-success btn-block"
-       href="#/register"
+       href="#{{model.shared.getRoute('register')}}"
     >Register
     </a>
 </div>

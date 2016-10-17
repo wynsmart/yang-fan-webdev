@@ -2,14 +2,15 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
-                <a href="#/user/{{model.shared.user._id}}/website/{{model.websiteId}}/page" class="navbar-link">
+                <a href="#{{model.shared.getRoute('page_list')}}" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </p>
             <span class="navbar-brand">Widgets</span>
             <p class="navbar-text pull-right">
-                <a href="#/widget-choose" class="navbar-link">
-                    <span class="glyphicon glyphicon-plus"></span>
+                <a href="#{{model.shared.getRoute('widget_chooser')}}"
+                   class="navbar-link"
+                ><span class="glyphicon glyphicon-plus"></span>
                 </a>
             </p>
         </div>
@@ -19,15 +20,12 @@
 
 <div class="container-fluid">
     <div class="form-group widget-container" ng-repeat="widget in model.widgets">
-        <ng-include src="model.getSrcByWidget(widget)"></ng-include>
+        <ng-include src="model.getTemplateSrc(widget)"></ng-include>
         <div class="widget-control">
-            <a href="#/user/{{model.shared.user._id
-                    }}/website/{{model.websiteId
-                    }}/page/{{model.pageId
-                    }}/widget/{{widget._id}}">
+            <a href="#{{model.shared.getRoute('widget_edit', {wgid: widget._id})}}">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
-            <a href="#/widget-youtube">
+            <a ng-click="">
                 <span class="glyphicon glyphicon-align-justify"></span>
             </a>
         </div>

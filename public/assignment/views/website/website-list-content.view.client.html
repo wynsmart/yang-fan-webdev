@@ -1,8 +1,8 @@
 <div class="form-group" ng-repeat="website in model.websites">
-    <a href="#/user/{{model.shared.user._id}}/website/{{website._id}}/page">
+    <a href="#{{model.shared.getRoute('page_list', {wid: website._id})}}">
         {{website.name}}
     </a>
-    <a href="#/user/{{model.shared.user._id}}/website/{{website._id}}" class="pull-right">
+    <a href="#{{model.shared.getRoute('website_edit', {wid: website._id})}}" class="pull-right">
         <span class="glyphicon glyphicon-cog"></span>
     </a>
 </div>

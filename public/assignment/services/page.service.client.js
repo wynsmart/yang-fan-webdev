@@ -11,19 +11,19 @@
         ];
 
         return {
-            createPage: _createPage,
-            findPagesByWebsiteId: _findPagesByWebsiteId,
-            findPageById: _findPageById,
-            updatePage: _updatePage,
-            deletePage: _deletePage,
+            createPage: createPage,
+            findPagesByWebsiteId: findPagesByWebsiteId,
+            findPageById: findPageById,
+            updatePage: updatePage,
+            deletePage: deletePage,
         };
 
-        function _createPage(websiteId, page) {
+        function createPage(websiteId, page) {
             page.websiteId = websiteId;
             pages.push(page);
         }
 
-        function _findPagesByWebsiteId(websiteId) {
+        function findPagesByWebsiteId(websiteId) {
             var ret = [];
             for (var page of pages) {
                 if (page.websiteId === websiteId) {
@@ -33,7 +33,7 @@
             return ret;
         }
 
-        function _findPageById(pageId) {
+        function findPageById(pageId) {
             for (var page of pages) {
                 if (page._id === pageId) {
                     return page;
@@ -42,7 +42,7 @@
             return null;
         }
 
-        function _updatePage(pageId, page) {
+        function updatePage(pageId, page) {
             for (var i = 0; i < pages.length; i++) {
                 if (pages[i]._id === pageId) {
                     pages[i] = page;
@@ -51,7 +51,7 @@
             }
         }
 
-        function _deletePage(pageId) {
+        function deletePage(pageId) {
             for (var i = 0; i < pages.length; i++) {
                 if (pages[i]._id === pageId) {
                     pages.splice(i, 1);

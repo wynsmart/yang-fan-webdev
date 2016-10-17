@@ -9,14 +9,14 @@
         var vm = this;
         vm.shared = SharedService;
         vm.user = {};
-        vm.login = _login;
+        vm.login = login;
 
-        function _login() {
+        function login() {
             vm.shared.user = UserService.findUserByCredentials(vm.user.username, vm.user.password);
             if (vm.shared.user) {
-                $location.url(`/user/${vm.shared.user._id}`);
+                $location.url(vm.shared.getRoute('profile', {uid: vm.shared.user._id}));
             } else {
-                vm.alert = "Incorrect username or password";
+                vm.error = "Incorrect username or password";
             }
         }
     }
@@ -25,15 +25,15 @@
         var vm = this;
         vm.shared = SharedService;
         vm.user = {};
-        vm.register = _register;
+        vm.register = register;
 
-        function _register() {
+        function register() {
             if (vm.user.password !== vm.user.password2){
-                vm.alert = "The two passwords are not identical";
+                vm.error = "The two passwords are not identical";
                 return;
             }
             if (!vm.user.password){
-                vm.alert = "Password cannot be empty";
+                vm.error = "Password cannot be empty";
                 return;
             }
             vm.shared.user = {
@@ -42,16 +42,16 @@
                 password: vm.user.password,
             };
             UserService.createUser(vm.shared.user);
-            $location.url(`/user/${vm.shared.user._id}`);
+            $location.url(vm.shared.getRoute('profile', {uid: vm.shared.user._id}));
         }
     }
 
     function ProfileController($routeParams, SharedService, UserService) {
         var vm = this;
         vm.shared = SharedService;
-        vm.updateUser = _updateUser;
+        vm.updateUser = updateUser;
 
-        function _updateUser(){
+        function updateUser(){
             UserService.updateUser(vm.shared.user._id, vm.shared.user);
         }
     }

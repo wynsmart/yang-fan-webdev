@@ -16,9 +16,9 @@
         vm.shared = SharedService;
         vm.website = {};
         vm.websites = WebsiteService.findWebsitesByUser(vm.shared.user._id);
-        vm.createWebsite = _createWebsite;
+        vm.createWebsite = createWebsite;
 
-        function _createWebsite() {
+        function createWebsite() {
             WebsiteService.createWebsite(vm.shared.user._id, vm.website);
             vm.websites.push(vm.website);
             vm.website = {};
@@ -30,16 +30,16 @@
         vm.shared = SharedService;
         vm.website = WebsiteService.findWebsiteById($routeParams.wid);
         vm.websites = WebsiteService.findWebsitesByUser(vm.shared.user._id);
-        vm.updateWebsite = _updateWebsite;
-        vm.deleteWebsite = _deleteWebsite;
+        vm.updateWebsite = updateWebsite;
+        vm.deleteWebsite = deleteWebsite;
 
-        function _updateWebsite(website) {
+        function updateWebsite(website) {
             WebsiteService.updateWebsite(vm.website._id, website);
         }
 
-        function _deleteWebsite() {
+        function deleteWebsite() {
             WebsiteService.deleteWebsite(vm.website._id);
-            $location.url(`/user/${vm.shared.user._id}/website`);
+            $location.url(vm.shared.getRoute('website_list'));
         }
     }
 

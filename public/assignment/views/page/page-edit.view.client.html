@@ -2,13 +2,13 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
-                <a href="#/page-list" class="navbar-link">
+                <a href="#{{model.shared.getRoute('page_list')}}" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </p>
             <span class="navbar-brand">Edit Page</span>
             <p class="navbar-text pull-right">
-                <a href="#/page-list" class="navbar-link">
+                <a ng-click="model.updatePage()" class="navbar-link">
                     <span class="glyphicon glyphicon-ok"></span>
                 </a>
             </p>
@@ -29,7 +29,8 @@
         </div>
         <div class="form-group">
             <a class="btn btn-danger btn-block"
-               href="#/page-list">Delete</a></div>
+               ng-click="model.deletePage()"
+            >Delete</a></div>
     </form>
 </div>
 

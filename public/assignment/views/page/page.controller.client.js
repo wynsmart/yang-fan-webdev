@@ -16,11 +16,26 @@
     function NewPageController(SharedService) {
         var vm = this;
         vm.shared = SharedService;
+        vm.createPage = createPage;
+
+        function createPage() {
+
+        }
     }
 
-    function EditPageController(SharedService) {
+    function EditPageController(SharedService, PageService) {
         var vm = this;
         vm.shared = SharedService;
+        vm.updatePage = updatePage;
+        vm.deletePage = deletePage;
+
+        function updatePage() {
+            // PageService.updatePage();
+        }
+
+        function deletePage() {
+
+        }
     }
 
 })();

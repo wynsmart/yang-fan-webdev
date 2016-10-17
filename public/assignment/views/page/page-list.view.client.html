@@ -2,13 +2,13 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <p class="navbar-text pull-left">
-                <a href="#/user/{{model.shared.user._id}}/website" class="navbar-link">
+                <a href="#{{model.shared.getRoute('website_list')}}" class="navbar-link">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
             </p>
             <span class="navbar-brand">Pages</span>
             <p class="navbar-text pull-right">
-                <a href="#/user/{{model.shared.user._id}}/website/{{model.websiteId}}/page/new" class="navbar-link">
+                <a href="#{{model.shared.getRoute('page_new')}}" class="navbar-link">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
             </p>
@@ -19,10 +19,10 @@
 
 <div class="container-fluid">
     <div class="form-group" ng-repeat="page in model.pages">
-        <a href="#/user/{{model.shared.user._id}}/website/{{model.websiteId}}/page/{{page._id}}/widget">
+        <a href="#{{model.shared.getRoute('widget_list', {pid: page._id})}}">
             {{page.name}}
         </a>
-        <a href="#/user/{{model.shared.user._id}}/website/{{model.websiteId}}/page/{{page._id}}" class="pull-right">
+        <a href="#{{model.shared.getRoute('widget_edit', {pid: page._id})}}" class="pull-right">
             <span class="glyphicon glyphicon-cog"></span>
         </a>
     </div>

@@ -15,25 +15,25 @@
             {_id: "567", widgetType: "HEADER", pageId: "321", size: 4, text: "Lorem ipsum"},
             {
                 _id: "678", widgetType: "YOUTUBE", pageId: "321", width: "100%",
-                url: "https://www.youtube.com/embed/DQOYfYsUKl0"
+                url: "https://youtu.be/AM2Ivdi9c4E"
             },
             {_id: "789", widgetType: "HTML", pageId: "321", text: "<p>Lorem ipsum html text2</p>"},
         ];
 
         return {
-            createWidget: _createWidget,
-            findWidgetsByPageId: _findWidgetsByPageId,
-            findWidgetById: _findWidgetById,
-            updateWidget: _updateWidget,
-            deleteWidget: _deleteWidget,
+            createWidget: createWidget,
+            findWidgetsByPageId: findWidgetsByPageId,
+            findWidgetById: findWidgetById,
+            updateWidget: updateWidget,
+            deleteWidget: deleteWidget,
         };
 
-        function _createWidget(pageId, widget) {
+        function createWidget(pageId, widget) {
             widget.pageId = pageId;
             widgets.push(widget);
         }
 
-        function _findWidgetsByPageId(pageId) {
+        function findWidgetsByPageId(pageId) {
             var ret = [];
             for (var widget of widgets) {
                 if (widget.pageId === pageId) {
@@ -43,7 +43,7 @@
             return ret;
         }
 
-        function _findWidgetById(widgetId) {
+        function findWidgetById(widgetId) {
             for (var widget of widgets) {
                 if (widget._id === widgetId) {
                     return widget;
@@ -52,7 +52,7 @@
             return null;
         }
 
-        function _updateWidget(widgetId, widget) {
+        function updateWidget(widgetId, widget) {
             for (var i = 0; i < widgets.length; i++) {
                 if (widgets[i]._id === widgetId) {
                     widgets[i] = widget;
@@ -61,7 +61,7 @@
             }
         }
 
-        function _deleteWidget(widgetId) {
+        function deleteWidget(widgetId) {
             for (var i = 0; i < widgets.length; i++) {
                 if (widgets[i]._id === widgetId) {
                     widgets.splice(i, 1);

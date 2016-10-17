@@ -54,8 +54,8 @@
     </form>
 
     <a class="btn btn-primary btn-block"
-       href="#/user/{{model.shared.user._id}}/website">Websites</a>
+       href="#{{model.shared.getRoute('website_list')}}">Websites</a>
     <a class="btn btn-danger btn-block"
-       href="#/login">Logout</a>
+       href="#{{model.shared.getRoute('login')}}">Logout</a>
 </div>
 <footer></footer>
