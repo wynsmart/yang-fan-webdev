@@ -8,6 +8,16 @@
     function WidgetListController($routeParams, $sce, SharedService, WidgetService) {
         var vm = this;
         vm.shared = SharedService;
+        vm.header = {
+            title: 'Widgets',
+            backBtn: {
+                href: 'page_list',
+            },
+            actionBtn: {
+                icon: 'plus',
+                href: 'widget_chooser',
+            },
+        };
         vm.widgets = WidgetService.findWidgetsByPageId($routeParams.pid);
         vm.getSafeHTML = getSafeHTML;
         vm.getYoutubeSrc = getYoutubeSrc;
@@ -27,6 +37,12 @@
     function NewWidgetController($location, $routeParams, SharedService, WidgetService) {
         var vm = this;
         vm.shared = SharedService;
+        vm.header = {
+            title: 'Choose Widget',
+            backBtn: {
+                href: 'widget_list',
+            },
+        };
         vm.pageId = $routeParams.pid;
         vm.widget = {
             _id: String(Date.now()),
@@ -44,7 +60,17 @@
     function EditWidgetController($routeParams, SharedService, WidgetService) {
         var vm = this;
         vm.shared = SharedService;
-        vm.widget = WidgetService.findWidgetById($routeParams.wgid)
+        vm.header = {
+            title: 'Widget Edit',
+            backBtn: {
+                href: 'widget_list',
+            },
+            actionBtn: {
+                icon: 'ok',
+                click: () => vm.updateWidget(),
+            },
+        };
+        vm.widget = WidgetService.findWidgetById($routeParams.wgid);
         vm.getTemplateSrc = getTemplateSrc;
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;

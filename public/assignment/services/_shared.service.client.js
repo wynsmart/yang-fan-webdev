@@ -30,11 +30,12 @@
         * Example:
         * in: website_edit
         * out: /user/123/website/456, when :uid=123 and :wid=456
-        * note: supplementaryDict is used to map keys which is not in url of current page
+        * note: priorDict is used to map keys prior to $routeParams
         * */
-        function getRoute(routeKey, supplementaryDict){
+        function getRoute(routeKey, priorDict){
             return routeMap[routeKey].replace(/:([^\/]+)/g, function (_, key) {
-                return (key in $routeParams) ? $routeParams[key] : supplementaryDict[key];
+                return priorDict && key in priorDict ?
+                    priorDict[key] : $routeParams[key];
             });
         }
     }

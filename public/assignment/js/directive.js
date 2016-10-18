@@ -1,9 +1,16 @@
 (function () {
     angular
         .module("WebAppMaker")
+        .directive('header', Header)
         .directive('footer', Footer)
         .directive('websiteListHeader', WebsiteListHeader)
         .directive('websiteListContent', WebsiteListContent);
+
+    function Header() {
+        return {
+            templateUrl: '/assignment/views/user/header.view.client.html'
+        };
+    }
 
     function Footer() {
         return {

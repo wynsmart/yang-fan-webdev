@@ -6,11 +6,6 @@ body {
     padding: 60px 0px;
 }
 
-.navbar-header {
-    width: 100%;
-    margin: 0px !important;
-}
-
 .widget-container {
     position: relative;
 }

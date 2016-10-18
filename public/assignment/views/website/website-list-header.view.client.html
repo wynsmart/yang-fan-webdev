@@ -1,14 +1,15 @@
-<div class="col-md-4 hidden-xs hidden-sm">
-    <p class="navbar-text pull-left">
-        <a href="#{{model.shared.getRoute('website_list')}}" class="navbar-link">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-    </p>
-    <span class="navbar-brand">Websites</span>
-    <p class="navbar-text pull-right">
-        <a href="#{{model.shared.getRoute('website_new')}}" class="navbar-link">
-            <span class="glyphicon glyphicon-plus"></span>
-        </a>
-    </p>
-</div>
-
+<ul class="nav navbar-nav pull-left">
+    <li>
+        <a href="#{{model.shared.getRoute('website_list')}}"
+           class="glyphicon glyphicon-chevron-left"
+        ></a>
+    </li>
+</ul>
+<span class="navbar-brand">Websites</span>
+<ul class="nav navbar-nav pull-right">
+    <li>
+        <a href="#{{model.shared.getRoute('website_new')}}"
+           class="glyphicon glyphicon-plus"
+        ></a>
+    </li>
+</ul>

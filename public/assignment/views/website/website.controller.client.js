@@ -8,6 +8,16 @@
     function WebsiteListController($routeParams, SharedService, WebsiteService) {
         var vm = this;
         vm.shared = SharedService;
+        vm.header = {
+            title: 'Websites',
+            backBtn: {
+                href: 'profile',
+            },
+            actionBtn: {
+                icon: 'plus',
+                href: 'website_new',
+            },
+        };
         vm.websites = WebsiteService.findWebsitesByUser(vm.shared.user._id);
     }
 
