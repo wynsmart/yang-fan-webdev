@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function (app) {
     var widgets = [
         {_id: "123", widgetType: "HEADING", pageId: "321", size: 2, text: "GIZMODO"},
         {_id: "234", widgetType: "HEADING", pageId: "321", size: 4, text: "Lorem ipsum"},
@@ -19,26 +19,55 @@ module.exports = function(app) {
     app.get("/api/page/:pid/widget", findWidgetsByPageId);
     app.get("/api/widget/:wgid", findWidgetById);
     app.put("/api/widget/:wgid", updateWidget);
-    app.delete("/api/widget/wgid", deleteWidget);
+    app.delete("/api/widget/:wgid", deleteWidget);
 
     function createWidget(req, res) {
-
+        var widget = req.body;
+        widgets.push(widget);
+        res.json(widgets);
     }
 
     function findWidgetsByPageId(req, res) {
-
+        var wgid = req.params.wgid;
+        var result = [];
+        for (var i = 0; i < widgets.length; i++) {
+            if (widgets[i]._id === wgid) {
+                result.push(widgets[i]);
+            }
+        }
+        res.json(result);
     }
 
     function findWidgetById(req, res) {
-
+        var wgid = req.params.wgid;
+        for (var wg of widgets) {
+            if (wg._id === wgid) {
+                res.json(wg);
+                return;
+            }
+        }
+        res.sendStatus(204);
     }
 
     function updateWidget(req, res) {
-
+        var wgid = req.params.wgid;
+        var widget = req.body;
+        for (var i = 0; i < widgets.length; i++) {
+            if (widgets[i]._id === wgid) {
+                widgets[i] = widget;
+            }
+        }
+        res.sendStatus(200);
     }
 
     function deleteWidget(req, res) {
-
+        var wgid = req.params.wgid;
+        for (var i = 0; i < widgets.length; i++) {
+            if (widgets[i]._id === wgid) {
+                widgets.splice(i, 1);
+            }
+        }
+        res.sendStatus(200);
     }
 
 };

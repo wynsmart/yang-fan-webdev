@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .factory("PageService", PageService);
 
-    function PageService() {
+    function PageService($http) {
 
         return {
             createPage: createPage,
@@ -14,45 +14,23 @@
         };
 
         function createPage(websiteId, page) {
-            page.websiteId = websiteId;
-            pages.push(page);
+            return $http.post(`/api/website/${websiteId}/page`, page);
         }
 
         function findPagesByWebsiteId(websiteId) {
-            var ret = [];
-            for (var page of pages) {
-                if (page.websiteId === websiteId) {
-                    ret.push(page);
-                }
-            }
-            return ret;
+            return $http.get(`/api/webiste/${websiteId}/page`);
         }
 
         function findPageById(pageId) {
-            for (var page of pages) {
-                if (page._id === pageId) {
-                    return page;
-                }
-            }
-            return null;
+            return $http.get(`/api/page/${pageId}`);
         }
 
         function updatePage(pageId, page) {
-            for (var i = 0; i < pages.length; i++) {
-                if (pages[i]._id === pageId) {
-                    pages[i] = page;
-                    return;
-                }
-            }
+            return $http.put(`/api/page/${pageId}`, page);
         }
 
         function deletePage(pageId) {
-            for (var i = 0; i < pages.length; i++) {
-                if (pages[i]._id === pageId) {
-                    pages.splice(i, 1);
-                    return;
-                }
-            }
+            return $http.delete(`/api/page/${pageId}`);
         }
     }
 })();

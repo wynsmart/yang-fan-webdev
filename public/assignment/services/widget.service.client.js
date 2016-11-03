@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .factory("WidgetService", WidgetService);
 
-    function WidgetService() {
+    function WidgetService($http) {
 
         return {
             createWidget: createWidget,
@@ -14,45 +14,23 @@
         };
 
         function createWidget(pageId, widget) {
-            widget.pageId = pageId;
-            widgets.push(widget);
+            return $http.post(`/api/page/${pageId}/widget`, widget);
         }
 
         function findWidgetsByPageId(pageId) {
-            var ret = [];
-            for (var widget of widgets) {
-                if (widget.pageId === pageId) {
-                    ret.push(widget);
-                }
-            }
-            return ret;
+            return $http.get(`/api/page/${pageId}/widget`);
         }
 
         function findWidgetById(widgetId) {
-            for (var widget of widgets) {
-                if (widget._id === widgetId) {
-                    return widget;
-                }
-            }
-            return null;
+            return $http.get(`/api/widget/${widgetId}`);
         }
 
         function updateWidget(widgetId, widget) {
-            for (var i = 0; i < widgets.length; i++) {
-                if (widgets[i]._id === widgetId) {
-                    widgets[i] = widget;
-                    return;
-                }
-            }
+            return $http.put(`/api/widget/${widgetId}`, widget);
         }
 
         function deleteWidget(widgetId) {
-            for (var i = 0; i < widgets.length; i++) {
-                if (widgets[i]._id === widgetId) {
-                    widgets.splice(i, 1);
-                    return;
-                }
-            }
+            return $http.delete(`/api/widget/${widgetId}`);
         }
     }
 })();
