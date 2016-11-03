@@ -18,7 +18,11 @@
                 href: 'website_new',
             },
         };
-        vm.websites = WebsiteService.findWebsitesByUser(vm.shared.user._id);
+        WebsiteService.findWebsitesByUser(vm.shared.user._id).then(
+            res => {
+                vm.websites = res.data;
+            }
+        );
     }
 
     function NewWebsiteController($routeParams, SharedService, WebsiteService) {
@@ -29,10 +33,12 @@
         vm.createWebsite = createWebsite;
 
         function createWebsite() {
-            WebsiteService.createWebsite(vm.shared.user._id, vm.website);
-            vm.websites.push(vm.website);
-            vm.website = {};
-            console.log('created website', vm.website);
+            console.log('creating website');
+            WebsiteService.createWebsite(vm.shared.user._id, vm.website).then(
+                res => {
+                    
+                }
+            );
         }
     }
 

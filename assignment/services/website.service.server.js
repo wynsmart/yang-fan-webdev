@@ -8,7 +8,7 @@ module.exports = function (app) {
         {_id: "789", name: "Chess", developerId: "234"},
     ];
 
-    app.post("/api/user/:userId/website", createWebsite);
+    app.post("/api/user/:uid/website", createWebsite);
     app.get("/api/user/:uid/website", findWebsitesByUser);
     app.get("/api/website/:wid", findWebsiteById);
     app.put("/api/website/:wid", updateWebsite);
@@ -22,7 +22,7 @@ module.exports = function (app) {
     }
 
     function findWebsitesByUser(req, res) {
-        var uid = req.params.userId;
+        var uid = req.params.uid;
         var result = [];
         for (var w of websites) {
             if (w.developerId === uid) {

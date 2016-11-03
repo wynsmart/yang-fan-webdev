@@ -55,9 +55,9 @@ module.exports = function (app) {
     }
 
     function findUserById(req, res) {
-        var userId = parseInt(req.params.uid);
+        var uid = req.params.uid;
         for (var u in users) {
-            if (users[u]._id === userId) {
+            if (users[u]._id === uid) {
                 res.send(users[u]);
                 return;
             }

@@ -19,11 +19,19 @@
             widget_edit:    '/user/:uid/website/:wid/page/:pid/widget/:wgid',
         };
 
-        return {
+        var shared = {
             user: null,
             routeMap: routeMap,
             getRoute: getRoute,
         };
+
+        UserService.findUserById($routeParams.uid).then(
+            res => {
+                shared.user = res.data;
+            }
+        );
+
+        return shared;
 
         /*
         * Dynamically convert route pattern into real url
