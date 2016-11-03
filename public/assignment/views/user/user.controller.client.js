@@ -12,13 +12,25 @@
         vm.login = login;
 
         function login() {
-            vm.shared.user = UserService.findUserByCredentials(vm.user.username, vm.user.password);
-            if (vm.shared.user) {
-                $location.url(vm.shared.getRoute('profile', {uid: vm.shared.user._id}));
-            } else {
-                vm.error = "Incorrect username or password";
+            console.log('logging in');
+            if (!vm.user.username) {
+                vm.error = 'username cannot be empty';
+                return;
             }
-            console.log('logged in user', vm.shared.user);
+            if (!vm.user.password) {
+                vm.error = 'password cannot be empty';
+                return;
+            }
+            UserService.findUserByCredentials(vm.user.username, vm.user.password).then(
+                res => {
+                    if (res.data) {
+                        vm.shared.user = res.data;
+                        $location.url(vm.shared.getRoute('profile', {uid: vm.shared.user._id}));
+                    } else {
+                        vm.error = 'Incorrect username or password';
+                    }
+                }
+            );
         }
     }
 
@@ -29,22 +41,25 @@
         vm.register = register;
 
         function register() {
+            console.log('registering');
             if (vm.user.password !== vm.user.password2) {
-                vm.error = "The two passwords are not identical";
+                vm.error = 'The two passwords are not identical';
                 return;
             }
             if (!vm.user.password) {
-                vm.error = "Password cannot be empty";
+                vm.error = 'Password cannot be empty';
                 return;
             }
-            vm.shared.user = {
-                _id: String(Date.now()),
+            var user = {
                 username: vm.user.username,
                 password: vm.user.password,
             };
-            UserService.createUser(vm.shared.user);
-            $location.url(vm.shared.getRoute('profile', {uid: vm.shared.user._id}));
-            console.log('registered user', vm.shared.user);
+            UserService.createUser(user).then(
+                res => {
+                    vm.shared.user = res.data;
+                    $location.url(vm.shared.getRoute('profile', {uid: vm.shared.user._id}));
+                }
+            );
         }
     }
 
@@ -55,14 +70,17 @@
             title: 'Profile',
             actionBtn: {
                 icon: "ok",
-                click: () => vm.updateUser(),
+                click: () => updateUser(),
             },
         };
-        vm.updateUser = updateUser;
 
         function updateUser() {
-            UserService.updateUser(vm.shared.user._id, vm.shared.user);
-            console.log('updated user', vm.shared.user);
+            console.log('updating user');
+            UserService.updateUser(vm.shared.user._id, vm.shared.user).then(
+                res => {
+                    console.log(res);
+                }
+            );
         }
     }
 

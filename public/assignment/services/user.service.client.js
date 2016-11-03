@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .factory("UserService", UserService);
 
-    function UserService() {
+    function UserService($http) {
 
         return {
             createUser: createUser,
@@ -15,52 +15,27 @@
         };
 
         function createUser(user) {
-            users.push(user);
+            return $http.post('/api/user', user);
         }
 
         function findUserById(userId) {
-            for (var user of users) {
-                if (user._id === userId) {
-                    return user;
-                }
-            }
-            return null;
+            return $http.get(`/api/user/${userId}`);
         }
 
         function findUserByUsername(username) {
-            for (var user of users) {
-                if (user.username === username) {
-                    return user;
-                }
-            }
-            return null;
+            return $http.get(`/api/user?username=${username}`);
         }
 
         function findUserByCredentials(username, password) {
-            for (var user of users) {
-                if (user.username === username && user.password === password) {
-                    return user;
-                }
-            }
-            return null;
+            return $http.get(`/api/user?username=${username}&password=${password}`);
         }
 
         function updateUser(userId, user) {
-            for (var i = 0; i < users.length; i++) {
-                if (users[i]._id === userId) {
-                    users[i] = user;
-                    return;
-                }
-            }
+            return $http.put(`/api/user/${userId}`, user);
         }
 
         function deleteUser(userId) {
-            for (var i = 0; i < users.length; i++) {
-                if (users[i]._id === userId) {
-                    users.splice(i, 1);
-                    return;
-                }
-            }
+            return $http.delete(`/api/user/${userId}`);
         }
     }
 })();

@@ -20,7 +20,7 @@
         };
 
         return {
-            user: UserService.findUserById($routeParams.uid),
+            user: null,
             routeMap: routeMap,
             getRoute: getRoute,
         };
