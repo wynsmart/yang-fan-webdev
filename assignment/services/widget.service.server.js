@@ -23,15 +23,17 @@ module.exports = function (app) {
 
     function createWidget(req, res) {
         var widget = req.body;
+        widget._id = Date.now().toString();
+        widget.pageId = req.params.pid;
         widgets.push(widget);
-        res.json(widgets);
+        res.json(widget);
     }
 
     function findWidgetsByPageId(req, res) {
-        var wgid = req.params.wgid;
+        var pid = req.params.pid;
         var result = [];
         for (var i = 0; i < widgets.length; i++) {
-            if (widgets[i]._id === wgid) {
+            if (widgets[i].pageId === pid) {
                 result.push(widgets[i]);
             }
         }

@@ -18,9 +18,14 @@
                 href: 'widget_chooser',
             },
         };
-        vm.widgets = WidgetService.findWidgetsByPageId($routeParams.pid);
         vm.getSafeHTML = getSafeHTML;
         vm.getYoutubeSrc = getYoutubeSrc;
+        var pid = $routeParams.pid;
+        WidgetService.findWidgetsByPageId(pid).then(
+            res => {
+                vm.widgets = res.data;
+            }
+        );
 
         function getSafeHTML(widget) {
             return $sce.trustAsHtml(widget.text);
@@ -43,21 +48,24 @@
                 href: 'widget_list',
             },
         };
-        vm.pageId = $routeParams.pid;
-        vm.widget = {
-            _id: String(Date.now()),
-        };
+        vm.widget = {};
         vm.createWidget = createWidget;
 
+        var pid = $routeParams.pid;
+
         function createWidget(widgetType) {
+            console.log('creating widget');
             vm.widget.widgetType = widgetType.toUpperCase();
-            WidgetService.createWidget(vm.pageId, vm.widget);
-            console.log('created widget', vm.widget);
-            $location.url(vm.shared.getRoute('widget_edit', {wgid: vm.widget._id}));
+            WidgetService.createWidget(pid, vm.widget).then(
+                res => {
+                    vm.widget = res.data;
+                    $location.url(vm.shared.getRoute('widget_edit', {wgid: vm.widget._id}));
+                }
+            );
         }
     }
 
-    function EditWidgetController($routeParams, SharedService, WidgetService) {
+    function EditWidgetController($location, $routeParams, SharedService, WidgetService) {
         var vm = this;
         vm.shared = SharedService;
         vm.header = {
@@ -70,7 +78,13 @@
                 click: () => vm.updateWidget(),
             },
         };
-        vm.widget = WidgetService.findWidgetById($routeParams.wgid);
+
+        var wgid = $routeParams.wgid
+        WidgetService.findWidgetById(wgid).then(
+            res => {
+                vm.widget = res.data;
+            }
+        );
         vm.getTemplateSrc = getTemplateSrc;
         vm.updateWidget = updateWidget;
         vm.deleteWidget = deleteWidget;
@@ -85,11 +99,21 @@
         }
 
         function updateWidget() {
-            console.log('updated widget', vm.widget);
+            console.log('updating widget');
+            WidgetService.updateWidget(wgid, vm.widget).then(
+                res => {
+                    $location.url(vm.shared.getRoute('widget_list'));
+                }
+            );
         }
 
         function deleteWidget() {
-            console.log('deleted widget', vm.widget);
+            console.log('deleting widget');
+            WidgetService.deleteWidget(wgid).then(
+                res => {
+                    $location.url(vm.shared.getRoute('widget_list'));
+                }
+            );
         }
     }
 

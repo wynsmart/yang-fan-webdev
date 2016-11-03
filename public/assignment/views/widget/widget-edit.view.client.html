@@ -1,7 +1,9 @@
 <header></header>
 
 <div class="container-fluid">
-    <form ng-include="model.getTemplateSrc()"></form>
+    <form ng-if="model.widget"
+          ng-include="model.getTemplateSrc()"
+    ></form>
 </div>
 
 <footer></footer>

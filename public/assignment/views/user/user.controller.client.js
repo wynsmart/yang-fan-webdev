@@ -24,8 +24,8 @@
             UserService.findUserByCredentials(vm.user.username, vm.user.password).then(
                 res => {
                     if (res.data) {
-                        vm.shared.user = res.data;
-                        $location.url(vm.shared.getRoute('profile', {uid: vm.shared.user._id}));
+                        var uid = res.data._id;
+                        $location.url(vm.shared.getRoute('profile', {uid: uid}));
                     } else {
                         vm.error = 'Incorrect username or password';
                     }
@@ -56,8 +56,8 @@
             };
             UserService.createUser(user).then(
                 res => {
-                    vm.shared.user = res.data;
-                    $location.url(vm.shared.getRoute('profile', {uid: vm.shared.user._id}));
+                    var uid = res.data._id;
+                    $location.url(vm.shared.getRoute('profile', {uid: uid}));
                 }
             );
         }
@@ -66,6 +66,7 @@
     function ProfileController($routeParams, SharedService, UserService) {
         var vm = this;
         vm.shared = SharedService;
+        vm.user = {};
         vm.header = {
             title: 'Profile',
             actionBtn: {
@@ -74,13 +75,16 @@
             },
         };
 
+        var uid = $routeParams.uid;
+        UserService.findUserById(uid).then(
+            res => {
+                vm.user = res.data;
+            }
+        );
+
         function updateUser() {
             console.log('updating user');
-            UserService.updateUser(vm.shared.user._id, vm.shared.user).then(
-                res => {
-                    console.log(res);
-                }
-            );
+            UserService.updateUser(vm.user._id, vm.user);
         }
     }
 

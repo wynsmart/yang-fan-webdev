@@ -14,14 +14,18 @@
                 href: 'website_list',
             },
             actionBtn: {
-              icon: 'plus',
+                icon: 'plus',
                 href: 'page_new',
             },
         };
-        vm.pages = PageService.findPagesByWebsiteId($routeParams.wid);
+        PageService.findPagesByWebsiteId($routeParams.wid).then(
+            res => {
+                vm.pages = res.data;
+            }
+        );
     }
 
-    function NewPageController(SharedService) {
+    function NewPageController($location, $routeParams, SharedService, PageService) {
         var vm = this;
         vm.shared = SharedService;
         vm.header = {
@@ -34,14 +38,21 @@
                 click: () => vm.createPage(),
             },
         };
+        vm.page = {};
         vm.createPage = createPage;
 
         function createPage() {
-            console.log('created page', vm.page);
+            console.log('creating page');
+            var wid = $routeParams.wid;
+            PageService.createPage(wid, vm.page).then(
+                res => {
+                    $location.url(vm.shared.getRoute('page_list'));
+                }
+            );
         }
     }
 
-    function EditPageController($routeParams, SharedService, PageService) {
+    function EditPageController($location, $routeParams, SharedService, PageService) {
         var vm = this;
         vm.shared = SharedService;
         vm.header = {
@@ -54,17 +65,32 @@
                 click: () => vm.updatePage(),
             },
         };
-        vm.page = PageService.findPageById($routeParams.pid);
         vm.updatePage = updatePage;
         vm.deletePage = deletePage;
+        PageService.findPageById($routeParams.pid).then(
+            res => {
+                vm.page = res.data;
+            }
+        );
+
+        var pid = $routeParams.pid;
 
         function updatePage() {
-            // PageService.updatePage();
-            console.log('updated page', vm.page);
+            console.log('updating page');
+            PageService.updatePage(pid, vm.page).then(
+                res => {
+                    $location.url(vm.shared.getRoute('page_list'));
+                }
+            );
         }
 
         function deletePage() {
-            console.log('deleted page', vm.page);
+            console.log('deleting page');
+            PageService.deletePage(pid).then(
+                res => {
+                    $location.url(vm.shared.getRoute('page_list'));
+                }
+            );
         }
     }
 

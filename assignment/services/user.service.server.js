@@ -7,47 +7,28 @@ module.exports = function (app) {
         {_id: "456", username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi"},
     ];
 
+    app.get('/api/users', (req, res) => {
+        res.json(users);
+    });
     app.post('/api/user', createUser);
-    app.get('/api/user', findUser);
+    app.get('/api/user', findUserByCredentials);
     app.get('/api/user/:uid', findUserById);
     app.put('/api/user/:uid', updateUser);
     app.delete('/api/user/:uid', deleteUser);
 
-    function findUser(req, res) {
-        var params = req.params;
-        var query = req.query;
-        if (query.password && query.username) {
-            findUserByCredentials(req, res);
-        } else if (query.username) {
-            findUserByUsername(req, res);
-        }
-    }
-
     function createUser(req, res) {
         var user = req.body;
-        user._id = Date.now();
+        user._id = Date.now().toString();
         users.push(user);
         res.json(user);
-    }
-
-    function findUserByUsername(req, res) {
-        var username = req.query.username;
-        for (var u of users) {
-            if (u.username === username) {
-                res.send(u);
-                return;
-            }
-        }
-        res.sendStatus(204);
     }
 
     function findUserByCredentials(req, res) {
         var username = req.query.username;
         var password = req.query.password;
         for (var u of users) {
-            if (u.username === username &&
-                u.password === password) {
-                res.send(u);
+            if (u.username === username && u.password === password) {
+                res.json(u);
                 return;
             }
         }
@@ -56,9 +37,9 @@ module.exports = function (app) {
 
     function findUserById(req, res) {
         var uid = req.params.uid;
-        for (var u in users) {
-            if (users[u]._id === uid) {
-                res.send(users[u]);
+        for (var u of users) {
+            if (u._id === uid) {
+                res.json(u);
                 return;
             }
         }

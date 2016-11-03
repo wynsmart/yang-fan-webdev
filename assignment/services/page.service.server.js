@@ -14,6 +14,7 @@ module.exports = function (app) {
 
     function createPage(req, res) {
         var page = req.body;
+        page._id = Date.now().toString();
         pages.push(page);
         res.json(pages);
     }

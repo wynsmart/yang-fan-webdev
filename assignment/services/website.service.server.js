@@ -17,8 +17,11 @@ module.exports = function (app) {
 
     function createWebsite(req, res) {
         var website = req.body;
+        var uid = req.params.uid;
+        website._id = Date.now().toString();
+        website.developerId = uid;
         websites.push(website);
-        res.json(websites);
+        res.json(website);
     }
 
     function findWebsitesByUser(req, res) {

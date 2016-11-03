@@ -18,25 +18,34 @@
                 href: 'website_new',
             },
         };
-        WebsiteService.findWebsitesByUser(vm.shared.user._id).then(
+        var uid = $routeParams.uid;
+        WebsiteService.findWebsitesByUser(uid).then(
             res => {
                 vm.websites = res.data;
             }
         );
     }
 
-    function NewWebsiteController($routeParams, SharedService, WebsiteService) {
+    function NewWebsiteController($location, $routeParams, SharedService, WebsiteService) {
         var vm = this;
         vm.shared = SharedService;
         vm.website = {};
-        vm.websites = WebsiteService.findWebsitesByUser(vm.shared.user._id);
         vm.createWebsite = createWebsite;
+
+        var uid = $routeParams.uid;
+
+        WebsiteService.findWebsitesByUser(uid).then(
+            res => {
+                vm.websites = res.data;
+            }
+        );
 
         function createWebsite() {
             console.log('creating website');
-            WebsiteService.createWebsite(vm.shared.user._id, vm.website).then(
+            WebsiteService.createWebsite(uid, vm.website).then(
                 res => {
-                    
+                    vm.websites.push(res.data);
+                    $location.url(vm.shared.getRoute('website_list'));
                 }
             );
         }
@@ -45,20 +54,31 @@
     function EditWebsiteController($location, $routeParams, SharedService, WebsiteService) {
         var vm = this;
         vm.shared = SharedService;
-        vm.website = WebsiteService.findWebsiteById($routeParams.wid);
-        vm.websites = WebsiteService.findWebsitesByUser(vm.shared.user._id);
+        var uid = $routeParams.uid;
+        var wid = $routeParams.wid;
+
+        WebsiteService.findWebsiteById(wid).then(
+            res => {
+                vm.website = res.data;
+            }
+        );
+        WebsiteService.findWebsitesByUser(uid).then(
+            res => {
+                vm.websites = res.data;
+            }
+        );
         vm.updateWebsite = updateWebsite;
         vm.deleteWebsite = deleteWebsite;
 
         function updateWebsite(website) {
+            console.log('updating website');
             WebsiteService.updateWebsite(vm.website._id, website);
-            console.log('updated website', vm.website);
         }
 
         function deleteWebsite() {
+            console.log('deleting website');
             WebsiteService.deleteWebsite(vm.website._id);
             $location.url(vm.shared.getRoute('website_list'));
-            console.log('deleted website', vm.website);
         }
     }
 
