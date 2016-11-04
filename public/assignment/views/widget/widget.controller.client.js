@@ -24,8 +24,18 @@
         WidgetService.findWidgetsByPageId(pid).then(
             res => {
                 vm.widgets = res.data;
+                var sortList = $('.sortable-list');
+                sortList.sortable({
+                    axis: "y",
+                    handle: '.sort-handle',
+                    update: (event, ui) => {
+                        var newOrder = sortList.sortable('toArray', {attribute: 'wgid'});
+                        WidgetService.reorderWidgets(pid, newOrder);
+                    },
+                });
             }
         );
+
 
         function getSafeHTML(widget) {
             return $sce.trustAsHtml(widget.text);
@@ -117,4 +127,5 @@
         }
     }
 
-})();
+})
+();

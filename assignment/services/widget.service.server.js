@@ -1,29 +1,46 @@
 module.exports = function (app) {
     var widgets = [
-        {_id: "123", widgetType: "HEADING", pageId: "321", size: 2, text: "GIZMODO"},
-        {_id: "234", widgetType: "HEADING", pageId: "321", size: 4, text: "Lorem ipsum"},
+        {
+            _id: "123", widgetType: "HEADING", pageId: "321",
+            size: 2, text: "GIZMODO", order: 123
+        },
+        {
+            _id: "234", widgetType: "HEADING", pageId: "321",
+            size: 4, text: "Lorem ipsum", order: 234,
+        },
         {
             _id: "345", widgetType: "IMAGE", pageId: "321", width: "100%",
-            url: "http://lorempixel.com/400/200/"
+            url: "http://lorempixel.com/400/200/", order: 345,
         },
-        {_id: "456", widgetType: "HTML", pageId: "321", text: "<p>Lorem ipsum html text</p>"},
-        {_id: "567", widgetType: "HEADING", pageId: "321", size: 4, text: "Lorem ipsum"},
+        {
+            _id: "456", widgetType: "HTML", pageId: "321",
+            text: "<p>Lorem ipsum html text</p>", order: 456,
+        },
+        {
+            _id: "567", widgetType: "HEADING", pageId: "321", size: 4,
+            text: "Lorem ipsum", order: 567
+        },
         {
             _id: "678", widgetType: "YOUTUBE", pageId: "321", width: "100%",
-            url: "https://youtu.be/AM2Ivdi9c4E"
+            url: "https://youtu.be/AM2Ivdi9c4E", order: 678,
         },
-        {_id: "789", widgetType: "HTML", pageId: "321", text: "<p>Lorem ipsum html text2</p>"},
+        {
+            _id: "789", widgetType: "HTML", pageId: "321",
+            text: "<p>Lorem ipsum html text2</p>", order: 789,
+        },
     ];
 
     app.post("/api/page/:pid/widget", createWidget);
     app.get("/api/page/:pid/widget", findWidgetsByPageId);
     app.get("/api/widget/:wgid", findWidgetById);
     app.put("/api/widget/:wgid", updateWidget);
+    app.put("/api/page/:pid/widget/reorder", reorderWidgets)
     app.delete("/api/widget/:wgid", deleteWidget);
 
     function createWidget(req, res) {
         var widget = req.body;
-        widget._id = Date.now().toString();
+        widget.order = Date.now();
+        widget._id = widget.order.toString();
         widget.pageId = req.params.pid;
         widgets.push(widget);
         res.json(widget);
@@ -60,6 +77,18 @@ module.exports = function (app) {
             }
         }
         res.sendStatus(200);
+    }
+
+    function reorderWidgets(req, res) {
+        var pid = req.params.pid;
+        var newOrder = req.body;
+        for (var i = 0; i < newOrder.length; i++) {
+            for (var w of widgets) {
+                if (w._id === newOrder[i]) {
+                    w.order = i;
+                }
+            }
+        }
     }
 
     function deleteWidget(req, res) {

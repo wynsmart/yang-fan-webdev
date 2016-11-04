@@ -1,7 +1,9 @@
 <header></header>
 
-<div class="container-fluid">
-    <div class="form-group widget-container" ng-repeat="widget in model.widgets">
+<div class="container-fluid sortable-list">
+    <div wgid="{{widget._id}}"
+         class="form-group widget-container"
+         ng-repeat="widget in model.widgets | orderBy: 'order'">
         <div ng-switch="widget.widgetType">
             <div ng-switch-when="HEADING">
                 <div class="h{{widget.size}}">{{widget.text}}</div>
@@ -27,7 +29,7 @@
             <a href="#{{model.shared.getRoute('widget_edit', {wgid: widget._id})}}">
                 <span class="glyphicon glyphicon-cog"></span>
             </a>
-            <a ng-click="">
+            <a class="sort-handle">
                 <span class="glyphicon glyphicon-align-justify"></span>
             </a>
         </div>
