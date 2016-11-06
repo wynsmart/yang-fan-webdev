@@ -1,4 +1,7 @@
 module.exports = function (app) {
+    const multer = require('multer');
+    const upload = multer({dest: __dirname + '/../../public/uploads'});
+
     var widgets = [
         {
             _id: "123", widgetType: "HEADING", pageId: "321",
@@ -30,12 +33,25 @@ module.exports = function (app) {
         },
     ];
 
+    app.post("/api/upload", upload.single('widgetUpload'), uploadImage);
     app.post("/api/page/:pid/widget", createWidget);
     app.get("/api/page/:pid/widget", findWidgetsByPageId);
     app.get("/api/widget/:wgid", findWidgetById);
     app.put("/api/widget/:wgid", updateWidget);
-    app.put("/api/page/:pid/widget/reorder", reorderWidgets)
+    app.put("/api/page/:pid/widget/reorder", reorderWidgets);
     app.delete("/api/widget/:wgid", deleteWidget);
+
+    function uploadImage(req, res) {
+        var wgid = req.body.widgetId;
+        var wgUpload = req.file;
+        for (var wg of widgets) {
+            if (wg._id === wgid) {
+                wg.url = `/uploads/${wgUpload.filename}`;
+                break;
+            }
+        }
+        res.json(wgUpload);
+    }
 
     function createWidget(req, res) {
         var widget = req.body;
