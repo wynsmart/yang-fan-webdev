@@ -13,18 +13,20 @@ module.exports = function (app) {
 
 
     function createPage(req, res) {
+        var wid = req.params.wid;
         var page = req.body;
         page._id = Date.now().toString();
+        page.websiteId = wid;
         pages.push(page);
         res.json(pages);
     }
 
     function findPagesByWebsiteId(req, res) {
-        var pid = req.params.pid;
+        var wid = req.params.wid;
         var result = [];
-        for (var i = 0; i < pages.length; i++) {
-            if (pages[i].pid === pid) {
-                result.push(pages[i]);
+        for (var p of pages) {
+            if (p.websiteId === wid) {
+                result.push(p);
             }
         }
         res.json(result);
