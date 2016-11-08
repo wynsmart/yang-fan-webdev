@@ -38,6 +38,7 @@
 
 <form action="/api/upload" method="post" enctype="multipart/form-data">
     <input name="widgetId" value="{{model.widget._id}}" class="hidden"/>
+    <input name="widgetUrl" value="{{model.wgUrl}}" class="hidden"/>
     <div class="form-group">
         <label for="widget-upload">Upload</label>
         <input type="file"

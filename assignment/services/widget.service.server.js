@@ -43,6 +43,7 @@ module.exports = function (app) {
 
     function uploadImage(req, res) {
         var wgid = req.body.widgetId;
+        var wgUrl = req.body.widgetUrl;
         var wgUpload = req.file;
         for (var wg of widgets) {
             if (wg._id === wgid) {
@@ -50,7 +51,8 @@ module.exports = function (app) {
                 break;
             }
         }
-        res.json(wgUpload);
+        // res.json(wgUpload);
+        res.redirect(`/assignment/#${wgUrl}`);
     }
 
     function createWidget(req, res) {

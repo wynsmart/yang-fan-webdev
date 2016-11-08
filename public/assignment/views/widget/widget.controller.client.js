@@ -88,6 +88,7 @@
                 click: () => vm.updateWidget(),
             },
         };
+        vm.wgUrl = $location.url();
 
         var wgid = $routeParams.wgid
         WidgetService.findWidgetById(wgid).then(
