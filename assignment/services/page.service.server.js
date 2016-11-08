@@ -1,9 +1,10 @@
-module.exports = function (app) {
-    var pages = [
-        {_id: "321", name: "Post 1", websiteId: "456"},
-        {_id: "432", name: "Post 2", websiteId: "456"},
-        {_id: "543", name: "Post 3", websiteId: "456"},
-    ];
+module.exports = function (app, db) {
+
+    var PageModel = db.model('PageModel', db.Schema({
+        name: String,
+        title: String,
+        websiteId: String,
+    }));
 
     app.post("/api/website/:wid/page", createPage);
     app.get("/api/webiste/:wid/page", findPagesByWebsiteId);
@@ -15,53 +16,53 @@ module.exports = function (app) {
     function createPage(req, res) {
         var wid = req.params.wid;
         var page = req.body;
-        page._id = Date.now().toString();
         page.websiteId = wid;
-        pages.push(page);
-        res.json(pages);
+        PageModel.create(page, (err, page) => {
+            console.log('created page:', page);
+            res.json(page);
+        });
     }
 
     function findPagesByWebsiteId(req, res) {
         var wid = req.params.wid;
-        var result = [];
-        for (var p of pages) {
-            if (p.websiteId === wid) {
-                result.push(p);
+        PageModel.find({websiteId: wid}, (err, pages) => {
+            console.log('found pages:', pages);
+            if (pages) {
+                res.json(pages);
+            } else {
+                res.sendStatus(204);
             }
-        }
-        res.json(result);
+        });
     }
 
     function findPageById(req, res) {
         var pid = req.params.pid;
-        for (var p of pages) {
-            if (p._id === pid) {
-                res.json(p);
-                return;
+        PageModel.findOne({_id: pid}, (err, page) => {
+            console.log('found page:', page);
+            if (page) {
+                res.json(page);
+            } else {
+                res.sendStatus(204);
             }
-        }
-        res.sendStatus(204);
+        });
     }
 
     function updatePage(req, res) {
         var pid = req.params.pid;
         var page = req.body;
-        for (var i = 0; i < pages.length; i++) {
-            if (pages[i]._id === pid) {
-                pages[i] = page;
-            }
-        }
-        res.sendStatus(200);
+        PageModel.update({_id: pid}, page, (err, raw) => {
+            console.log('updated page:', raw);
+            res.sendStatus(200);
+        });
     }
 
     function deletePage(req, res) {
+        // TODO: recursively delete all widgets
         var pid = req.params.pid;
-        for (var i = 0; i < pages.length; i++) {
-            if (pages[i]._id === pid) {
-                pages.splice(i, 1);
-            }
-        }
-        res.sendStatus(200);
+        PageModel.remove({_id: pid}, (err) => {
+            console.log('deleted page:', pid);
+            res.sendStatus(200);
+        });
     }
 
 };

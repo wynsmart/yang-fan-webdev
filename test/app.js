@@ -15,14 +15,16 @@ module.exports = function(app)
     }
 
     var mongoose = require("mongoose");
-    mongoose.Promise = global.Promise;
-    mongoose.connect(connectionString);
+    var db = new mongoose.Mongoose();
+    db.Promise = global.Promise;
+    db.connect(connectionString);
+    db.connection.once('open', () => console.log('mongodb connected: test'));
 
-    var TestSchema = mongoose.Schema({
+    var TestSchema = db.Schema({
         message: String
     });
 
-    var TestModel = mongoose.model("TestModel", TestSchema);
+    var TestModel = db.model("TestModel", TestSchema);
 
     function findAllMessages(req, res) {
         TestModel
