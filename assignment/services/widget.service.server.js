@@ -6,6 +6,11 @@ module.exports = function (app, db) {
         widgetType: String,
         pageId: String,
         order: Number,
+        name: String,
+        text: String,
+        size: Number,
+        url: String,
+        width: String,
     }));
 
     app.post("/api/upload", upload.single('widgetUpload'), uploadImage);
@@ -28,6 +33,7 @@ module.exports = function (app, db) {
     }
 
     function createWidget(req, res) {
+        // TODO: fix widget attributes not saved properly
         var widget = req.body;
         widget.order = Date.now();
         widget.pageId = req.params.pid;

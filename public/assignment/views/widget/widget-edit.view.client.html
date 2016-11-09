@@ -4,6 +4,12 @@
     <div ng-if="model.widget"
          ng-include="model.getTemplateSrc()"
     ></div>
+    <div class="form-group">
+        <a class="btn btn-danger btn-block"
+           ng-click="model.deleteWidget()"
+        >Delete
+        </a>
+    </div>
 </div>
 
 <footer></footer>
