@@ -1,6 +1,6 @@
-.profile-image {
+.profile-image > img {
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    border: 5px solid silver;
+    border: 5px solid rgba(0, 0, 0, 0.3);
 }
