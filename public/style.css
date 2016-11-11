@@ -4,3 +4,15 @@
     border-radius: 50%;
     border: 5px solid rgba(0, 0, 0, 0.3);
 }
+
+.section-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    border-bottom: 1px solid black;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-weight: bold;
+}

@@ -5,12 +5,12 @@ module.exports = function (app, db) {
     var WidgetModel = db.model('WidgetModel', db.Schema({
         widgetType: String,
         pageId: String,
-        order: Number,
+        order: {type: Number, default: Date.now},
         name: String,
         text: String,
         size: Number,
         url: String,
-        width: String,
+        width: {type: String, default: '100%'},
     }));
 
     app.post("/api/upload", upload.single('widgetUpload'), uploadImage);
@@ -35,7 +35,6 @@ module.exports = function (app, db) {
     function createWidget(req, res) {
         // TODO: fix widget attributes not saved properly
         var widget = req.body;
-        widget.order = Date.now();
         widget.pageId = req.params.pid;
         WidgetModel.create(widget, (err, widget) => {
             console.log('created widget:', widget);

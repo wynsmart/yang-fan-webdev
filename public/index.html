@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="MyApp" ng-controller="MyAppController as model">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,10 +10,20 @@
           crossorigin="anonymous"
     >
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"
+    ></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="app.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
+    <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -29,11 +39,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="/assignment" target="_blank">Assignment</a></li>
-                <li><a href="/project" target="_blank">Project</a></li>
-                <li><a href="/project" target="_blank">Demo Video</a></li>
-                <li><a href="/test" target="_blank">MongoDB Test</a></li>
-                <li><a href="https://github.com/wynsmart/yang-fan-webdev" target="_blank">GitHub.com</a></li>
+                <li ng-repeat="link in model.links">
+                    <a href="{{link.href}}" target="_blank">{{link.text}}</a>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -41,10 +49,53 @@
 
 
 <div class="profile-image text-center">
-    <img src="./profile.jpg">
-    <h1>Fan Yang</h1>
+    <img ng-src="{{model.profileImg}}">
+    <h1>{{model.name}}</h1>
+    <a href="{{model.linkedin}}" target="_blank">{{model.linkedin}}</a>
 </div>
 
+<div class="container">
+    <div class="section-title">EDUCATION</div>
+    <div ng-repeat="term in model.education">
+        <div class="section-subtitle">{{term.school}}</div>
+        <div class="clearfix">
+            <div class="pull-left">{{term.department}}</div>
+            <div class="pull-right">{{term.date}}</div>
+        </div>
+        <div>{{term.degree}}</div>
+        <div>Related Courses: {{term.courses}}</div>
+    </div>
+    <div class="section-title">TECHNICAL KNOWLEDGE</div>
+    <div class="row" ng-repeat="skill in model.skils">
+        <div class="section-subtitle col-md-4 col-xs-12">{{skill.field}}</div>
+        <div class="col-md-8 col-xs-12">{{skill.skills}}</div>
+    </div>
+    <div class="section-title">EXPERIENCE</div>
+    <div ng-repeat="exp in model.experience">
+        <div class="clearfix">
+            <div class="pull-left section-subtitle">{{exp.institution}}</div>
+            <div class="pull-right">{{exp.date}}</div>
+        </div>
+        <ul ng-repeat="item in exp.achievements">
+            <li>{{item}}</li>
+        </ul>
+    </div>
+    <div class="section-title">ACADEMIC PROJECTS</div>
+    <div ng-repeat="project in model.projects">
+        <div class="clearfix">
+            <div class="pull-left section-subtitle">{{project.institution}}</div>
+            <div class="pull-right">{{project.date}}</div>
+        </div>
+        <ul ng-repeat="item in project.achievements">
+            <li>{{item}}</li>
+        </ul>
+    </div>
+    <div class="section-title">INTERESTS/ACTIVITIES</div>
+    <ul>
+        <li ng-repeat="item in model.interests">{{item}}</li>
+    </ul>
+</div>
+------------
 <div class="container-fluid">
 
     <p>
@@ -77,13 +128,5 @@
         </li>
     </ul>
 </div>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"
-></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"
-></script>
 </body>
 </html>
