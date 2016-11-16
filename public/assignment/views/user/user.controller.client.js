@@ -63,7 +63,7 @@
         }
     }
 
-    function ProfileController($routeParams, SharedService, UserService) {
+    function ProfileController($routeParams, $location, SharedService, UserService) {
         var vm = this;
         vm.shared = SharedService;
         vm.user = {};
@@ -74,6 +74,7 @@
                 click: () => updateUser(),
             },
         };
+        vm.unregister = deleteUser;
 
         var uid = $routeParams.uid;
         UserService.findUserById(uid).then(
@@ -85,6 +86,15 @@
         function updateUser() {
             console.log('updating user');
             UserService.updateUser(vm.user._id, vm.user);
+        }
+
+        function deleteUser() {
+            console.log('removing user');
+            UserService.deleteUser(vm.user._id).then(
+                () => {
+                    $location.url(vm.shared.getRoute('login'));
+                }
+            );
         }
     }
 

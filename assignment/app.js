@@ -1,11 +1,7 @@
 module.exports = function (app) {
-    var connectionString = 'mongodb://localhost/assignment';
-    var mongoose = require("mongoose");
-    var db = new mongoose.Mongoose();
-    db.connect(connectionString);
-    db.connection.once('open', () => console.log('mongodb connected: assignment'));
-    require("./services/user.service.server.js")(app, db);
-    require("./services/website.service.server.js")(app, db);
-    require("./services/page.service.server.js")(app, db);
-    require("./services/widget.service.server.js")(app, db);
+    var models = require("./model/models.server");
+    require("./services/user.service.server.js")(app, models);
+    require("./services/website.service.server.js")(app, models);
+    require("./services/page.service.server.js")(app, models);
+    require("./services/widget.service.server.js")(app, models);
 };

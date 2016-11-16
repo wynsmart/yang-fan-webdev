@@ -17,6 +17,7 @@
             widget_list: '/user/:uid/website/:wid/page/:pid/widget',
             widget_chooser: '/user/:uid/website/:wid/page/:pid/widget/new',
             widget_edit: '/user/:uid/website/:wid/page/:pid/widget/:wgid',
+            flickr: '/user/:uid/website/:wid/page/:pid/widget/:wgid/flicker',
         };
 
         return {

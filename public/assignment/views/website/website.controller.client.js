@@ -52,6 +52,7 @@
     }
 
     function EditWebsiteController($location, $routeParams, SharedService, WebsiteService) {
+        // TODO: website list sidebar not updated with latest change
         var vm = this;
         vm.shared = SharedService;
         var uid = $routeParams.uid;

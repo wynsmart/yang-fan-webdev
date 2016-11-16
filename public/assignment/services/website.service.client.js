@@ -7,8 +7,8 @@
 
         return {
             createWebsite: createWebsite,
-            findWebsitesByUser: findWebsitesByUser,
             findWebsiteById: findWebsiteById,
+            findWebsitesByUser: findWebsitesByUser,
             updateWebsite: updateWebsite,
             deleteWebsite: deleteWebsite,
         };
@@ -17,12 +17,12 @@
             return $http.post(`/api/user/${userId}/website`, website);
         }
 
-        function findWebsitesByUser(userId) {
-            return $http.get(`/api/user/${userId}/website`);
-        }
-
         function findWebsiteById(websiteId) {
             return $http.get(`/api/website/${websiteId}`);
+        }
+
+        function findWebsitesByUser(userId) {
+            return $http.get(`/api/user/${userId}/websites`);
         }
 
         function updateWebsite(websiteId, website) {

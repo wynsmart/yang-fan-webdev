@@ -18,7 +18,7 @@
         }
 
         function findPagesByWebsiteId(websiteId) {
-            return $http.get(`/api/webiste/${websiteId}/page`);
+            return $http.get(`/api/webiste/${websiteId}/pages`);
         }
 
         function findPageById(pageId) {

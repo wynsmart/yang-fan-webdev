@@ -3,7 +3,8 @@
         .module("WebAppMaker")
         .controller("WidgetListController", WidgetListController)
         .controller("NewWidgetController", NewWidgetController)
-        .controller("EditWidgetController", EditWidgetController);
+        .controller("EditWidgetController", EditWidgetController)
+        .controller('FlickrImageSearchController', FlickrImageSearchController);
 
     function WidgetListController($routeParams, $sce, SharedService, WidgetService) {
         var vm = this;
@@ -30,7 +31,11 @@
                     handle: '.sort-handle',
                     update: (event, ui) => {
                         var newOrder = sortList.sortable('toArray', {attribute: 'wgid'});
-                        WidgetService.reorderWidgets(pid, newOrder);
+                        WidgetService.reorderWidgets(pid, newOrder).then(
+                            () => {
+                                console.log('reordered widgets:', newOrder);
+                            }
+                        );
                     },
                 });
             }
@@ -42,8 +47,8 @@
         }
 
         function getYoutubeSrc(widget) {
-            console.assert(widget.widgetType === 'YOUTUBE', 'widgetType must be YOUTUBE');
-            var video_id = widget.url.split('/').pop();
+            console.assert(widget.type === 'YOUTUBE', 'widget type must be YOUTUBE');
+            var video_id = widget.url.match(/[^=/]+$/);
             var url = `https://www.youtube.com/embed/${video_id}`;
             return $sce.trustAsResourceUrl(url);
         }
@@ -65,7 +70,7 @@
 
         function createWidget(widgetType) {
             console.log('creating widget');
-            vm.widget.widgetType = widgetType.toUpperCase();
+            vm.widget.type = widgetType.toUpperCase();
             WidgetService.createWidget(pid, vm.widget).then(
                 res => {
                     vm.widget = res.data;
@@ -106,7 +111,7 @@
                 IMAGE: 'views/widget/widget-image.view.client.html',
                 YOUTUBE: 'views/widget/widget-youtube.view.client.html',
                 HTML: 'views/widget/widget-html.view.client.html',
-            }[vm.widget.widgetType];
+            }[vm.widget.type];
         }
 
         function updateWidget() {
@@ -123,6 +128,41 @@
             WidgetService.deleteWidget(wgid).then(
                 res => {
                     $location.url(vm.shared.getRoute('widget_list'));
+                }
+            );
+        }
+    }
+
+    function FlickrImageSearchController($location, $routeParams, SharedService, FlickrService, WidgetService) {
+        var vm = this;
+        vm.shared = SharedService;
+        vm.header = {
+            title: 'Search Flickr',
+            backBtn: {
+                href: 'widget_edit',
+            },
+        };
+        vm.searchText = '';
+        vm.searchPhotos = searchPhotos;
+        vm.selectPhoto = selectPhoto;
+
+        function searchPhotos() {
+            FlickrService.searchPhotos(vm.searchText).then(
+                res => {
+                    var data = res.data.replace("jsonFlickrApi(", "");
+                    data = data.substring(0, data.length - 1);
+                    data = JSON.parse(data);
+                    vm.photos = data.photos;
+                });
+        }
+
+        function selectPhoto(photo) {
+            var widgetId = $routeParams.wgid;
+            var url = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server;
+            url += "/" + photo.id + "_" + photo.secret + "_b.jpg";
+            WidgetService.updateWidget(widgetId, {url: url}).then(
+                res => {
+                    $location.url(vm.shared.getRoute('widget_edit'));
                 }
             );
         }
