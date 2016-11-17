@@ -10,22 +10,23 @@ module.exports = function (app, models) {
     function createPage(req, res) {
         var wid = req.params.wid;
         var page = req.body;
-        models.page.createPage(wid, page).then(
-            (page) => {
-                models.website.updateWebsite(wid, {$push: {pages: page}}).then(
-                    () => {
-                        console.log('created page:', page);
-                        res.json(page);
-                    }
-                );
-            }
-        );
+        models.page.createPage(wid, page).then(_assignToWebsite);
+
+        function _assignToWebsite(page) {
+            models.website.updateWebsite(wid, {$push: {pages: page}}).then(
+                () => {
+                    console.log('created page:', page);
+                    res.json(page);
+                }
+            );
+        }
+
     }
 
     function findPagesByWebsiteId(req, res) {
         var wid = req.params.wid;
         models.website.findAllPagesForWebsite(wid).then(
-            (website) => {
+            website => {
                 console.log('found pages:', website.pages);
                 if (website.pages) {
                     res.json(website.pages);
@@ -39,7 +40,7 @@ module.exports = function (app, models) {
     function findPageById(req, res) {
         var pid = req.params.pid;
         models.page.findPageById(pid).then(
-            (page) => {
+            page => {
                 console.log('found page:', page);
                 if (page) {
                     res.json(page);
@@ -54,7 +55,7 @@ module.exports = function (app, models) {
         var pid = req.params.pid;
         var page = req.body;
         models.page.updatePage(pid, page).then(
-            (raw) => {
+            raw => {
                 console.log('updated page:', raw);
                 res.sendStatus(200);
             }

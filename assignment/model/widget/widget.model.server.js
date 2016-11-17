@@ -23,6 +23,7 @@ module.exports = function (db) {
     }
 
     function deleteWidget(widgetId) {
+        console.log('deleting widget:', widgetId);
         return WidgetModel.remove({_id: widgetId});
     }
 

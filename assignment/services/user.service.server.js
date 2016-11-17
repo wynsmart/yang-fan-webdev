@@ -9,7 +9,7 @@ module.exports = function (app, models) {
     function createUser(req, res) {
         var user = req.body;
         models.user.createUser(user).then(
-            (user) => {
+            user => {
                 console.log('created user:', user);
                 res.json(user);
             }
@@ -20,7 +20,7 @@ module.exports = function (app, models) {
         var username = req.query.username;
         var password = req.query.password;
         models.user.findUserByCredentials(username, password).then(
-            (user) => {
+            user => {
                 console.log('found user:', user);
                 if (user) {
                     res.json(user);
@@ -34,7 +34,7 @@ module.exports = function (app, models) {
     function findUserById(req, res) {
         var uid = req.params.uid;
         models.user.findUserById(uid).then(
-            (user) => {
+            user => {
                 console.log('found user:', user);
                 if (user) {
                     res.json(user);
@@ -48,7 +48,7 @@ module.exports = function (app, models) {
     function findUserByUsername(req, res) {
         var username = req.query.username;
         models.user.findUserByUsername(username).then(
-            (user) => {
+            user => {
                 if (user) {
                     res.json(user);
                 } else {
@@ -62,7 +62,7 @@ module.exports = function (app, models) {
         var user = req.body;
         var uid = req.params.uid;
         models.user.updateUser(uid, user).then(
-            (raw) => {
+            raw => {
                 console.log('updated user:', raw);
                 res.sendStatus(200);
             }
@@ -70,14 +70,22 @@ module.exports = function (app, models) {
     }
 
     function deleteUser(req, res) {
-        // TODO: recursively delete all websites, pages, and widgets
         var uid = req.params.uid;
-        models.user.deleteUser(uid).then(
-            (err) => {
-                console.log('deleted user:', uid);
-                res.sendStatus(200);
+        models.user.findUserById(uid).then(_deleteUser);
+
+        function _deleteUser(user) {
+            var promises = [];
+            for (var wid of user.websites) {
+                promises.push(models.website.deleteWebsite(wid));
             }
-        );
+            promises.push(models.user.deleteUser(uid));
+            global.Promise.all(promises).then(
+                () => {
+                    console.log('deleted user:', uid);
+                    res.sendStatus(200);
+                }
+            );
+        }
     }
 
 };

@@ -28,6 +28,7 @@ module.exports = function (db) {
     }
 
     function deletePage(pageId) {
+        console.log('deleting page:', pageId);
         return PageModel.remove({_id: pageId});
     }
 

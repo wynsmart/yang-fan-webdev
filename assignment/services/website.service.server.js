@@ -10,23 +10,23 @@ module.exports = function (app, models) {
     function createWebsite(req, res) {
         var website = req.body;
         var uid = req.params.uid;
-        models.website.createWebsiteForUser(uid, website).then(
-            (website) => {
-                models.user.updateUser(uid, {$push: {websites: website}}).then(
-                    () => {
-                        console.log('created website:', website);
-                        res.json(website);
-                    }
-                );
-            }
-        );
+        models.website.createWebsiteForUser(uid, website).then(_assignToUser);
+
+        function _assignToUser(website) {
+            models.user.updateUser(uid, {$push: {websites: website}}).then(
+                () => {
+                    console.log('created website:', website);
+                    res.json(website);
+                }
+            );
+        }
 
     }
 
     function findWebsiteById(req, res) {
         var wid = req.params.wid;
         models.website.findWebsiteById(wid).then(
-            (website) => {
+            website => {
                 console.log('found website:', website);
                 if (website) {
                     res.json(website);
@@ -40,7 +40,7 @@ module.exports = function (app, models) {
     function findWebsitesByUser(req, res) {
         var uid = req.params.uid;
         models.user.findAllWebsitesForUser(uid).then(
-            (user) => {
+            user => {
                 console.log('found websites:', user.websites);
                 if (user.websites) {
                     res.json(user.websites);
@@ -55,7 +55,7 @@ module.exports = function (app, models) {
         var wid = req.params.wid;
         var website = req.body;
         models.website.updateWebsite(wid, website).then(
-            (raw) => {
+            raw => {
                 console.log('updated website:', raw);
                 res.sendStatus(200);
             }

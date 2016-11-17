@@ -48,9 +48,11 @@
 
         function getYoutubeSrc(widget) {
             console.assert(widget.type === 'YOUTUBE', 'widget type must be YOUTUBE');
-            var video_id = widget.url.match(/[^=/]+$/);
-            var url = `https://www.youtube.com/embed/${video_id}`;
-            return $sce.trustAsResourceUrl(url);
+            if (widget.url) {
+                var video_id = widget.url.match(/[^=/]+$/)[0];
+                var url = `https://www.youtube.com/embed/${video_id}`;
+                return $sce.trustAsResourceUrl(url);
+            }
         }
     }
 
@@ -95,7 +97,7 @@
         };
         vm.wgUrl = $location.url();
 
-        var wgid = $routeParams.wgid
+        var wgid = $routeParams.wgid;
         WidgetService.findWidgetById(wgid).then(
             res => {
                 vm.widget = res.data;
@@ -111,13 +113,14 @@
                 IMAGE: 'views/widget/widget-image.view.client.html',
                 YOUTUBE: 'views/widget/widget-youtube.view.client.html',
                 HTML: 'views/widget/widget-html.view.client.html',
+                TEXT: 'views/widget/widget-text.view.client.html',
             }[vm.widget.type];
         }
 
         function updateWidget() {
             console.log('updating widget');
             WidgetService.updateWidget(wgid, vm.widget).then(
-                res => {
+                () => {
                     $location.url(vm.shared.getRoute('widget_list'));
                 }
             );
@@ -126,7 +129,7 @@
         function deleteWidget() {
             console.log('deleting widget');
             WidgetService.deleteWidget(wgid).then(
-                res => {
+                () => {
                     $location.url(vm.shared.getRoute('widget_list'));
                 }
             );
@@ -161,7 +164,7 @@
             var url = "https://farm" + photo.farm + ".staticflickr.com/" + photo.server;
             url += "/" + photo.id + "_" + photo.secret + "_b.jpg";
             WidgetService.updateWidget(widgetId, {url: url}).then(
-                res => {
+                () => {
                     $location.url(vm.shared.getRoute('widget_edit'));
                 }
             );

@@ -27,6 +27,7 @@ module.exports = function (db) {
     }
 
     function deleteWebsite(websiteId) {
+        console.log('deleting website:', websiteId);
         return WebsiteModel.remove({_id: websiteId});
     }
 };

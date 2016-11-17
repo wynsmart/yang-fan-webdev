@@ -21,7 +21,7 @@ module.exports = function (app, models) {
         }
         var imageUrl = `/uploads/${wgUpload.filename}`;
         models.widget.updateImageUrl(wgid, imageUrl).then(
-            (raw) => {
+            () => {
                 console.log('uploaded image:', wgUpload);
                 res.redirect(`/assignment/#${wgUrl}`);
             }
@@ -31,22 +31,23 @@ module.exports = function (app, models) {
     function createWidget(req, res) {
         var widget = req.body;
         var pid = req.params.pid;
-        models.widget.createWidget(pid, widget).then(
-            (widget) => {
-                models.page.updatePage(pid, {$push: {widgets: widget}}).then(
-                    () => {
-                        console.log('created widget:', widget);
-                        res.json(widget);
-                    }
-                );
-            }
-        );
+        models.widget.createWidget(pid, widget).then(_assignToPage);
+
+        function _assignToPage(widget) {
+            models.page.updatePage(pid, {$push: {widgets: widget}}).then(
+                () => {
+                    console.log('created widget:', widget);
+                    res.json(widget);
+                }
+            );
+        }
+
     }
 
     function findWidgetById(req, res) {
         var wgid = req.params.wgid;
         models.widget.findWidgetById(wgid).then(
-            (widget) => {
+            widget => {
                 console.log('found widget:', widget);
                 if (widget) {
                     res.json(widget);
@@ -60,7 +61,7 @@ module.exports = function (app, models) {
     function findWidgetsByPageId(req, res) {
         var pid = req.params.pid;
         models.page.findAllWidgetsForPage(pid).then(
-            (page) => {
+            page => {
                 console.log('found widgets:', page.widgets);
                 if (page.widgets) {
                     res.json(page.widgets);
@@ -75,7 +76,7 @@ module.exports = function (app, models) {
         var wgid = req.params.wgid;
         var widget = req.body;
         models.widget.updateWidget(wgid, widget).then(
-            (raw) => {
+            raw => {
                 console.log('updated widget:', raw);
                 res.sendStatus(200);
             }
@@ -95,7 +96,8 @@ module.exports = function (app, models) {
 
     function deleteWidget(req, res) {
         var wgid = req.params.wgid;
-        models.widget.deleteWidget(wgid, (err) => {
+        models.widget.deleteWidget(wgid).then(
+            () => {
                 console.log('deleted widget:', wgid);
                 res.sendStatus(200);
             }

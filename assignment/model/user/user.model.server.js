@@ -36,6 +36,7 @@ module.exports = function (db) {
     }
 
     function deleteUser(userId) {
+        console.log('deleting user:', userId);
         return UserModel.remove({_id: userId});
     }
 };
