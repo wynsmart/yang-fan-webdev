@@ -1,3 +1,3 @@
 (function () {
-    angular.module("WebAppMaker", ['ngRoute', 'ngSanitize']);
+    angular.module("WebAppMaker", ['ngRoute', 'textAngular']);
 })();
