@@ -71,21 +71,12 @@ module.exports = function (app, models) {
 
     function deleteUser(req, res) {
         var uid = req.params.uid;
-        models.user.findUserById(uid).then(_deleteUser);
-
-        function _deleteUser(user) {
-            var promises = [];
-            for (var wid of user.websites) {
-                promises.push(models.website.deleteWebsite(wid));
+        models.user.deleteUser(uid).then(
+            () => {
+                console.log('deleted user:', uid);
+                res.sendStatus(200);
             }
-            promises.push(models.user.deleteUser(uid));
-            global.Promise.all(promises).then(
-                () => {
-                    console.log('deleted user:', uid);
-                    res.sendStatus(200);
-                }
-            );
-        }
+        );
     }
 
 };
