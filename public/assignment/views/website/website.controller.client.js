@@ -58,14 +58,14 @@
         var uid = $routeParams.uid;
         var wid = $routeParams.wid;
 
-        WebsiteService.findWebsiteById(wid).then(
-            res => {
-                vm.website = res.data;
-            }
-        );
         WebsiteService.findWebsitesByUser(uid).then(
             res => {
                 vm.websites = res.data;
+                for (var website of vm.websites) {
+                    if (website._id === wid) {
+                        vm.website = website;
+                    }
+                }
             }
         );
         vm.updateWebsite = updateWebsite;

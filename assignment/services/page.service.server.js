@@ -63,7 +63,6 @@ module.exports = function (app, models) {
     }
 
     function deletePage(req, res) {
-        // TODO: recursively delete all widgets
         var pid = req.params.pid;
         models.page.deletePage(pid).then(
             () => {

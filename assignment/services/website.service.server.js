@@ -63,7 +63,6 @@ module.exports = function (app, models) {
     }
 
     function deleteWebsite(req, res) {
-        // TODO: recursively delete all pages and widgets
         var wid = req.params.wid;
         models.website.deleteWebsite(wid).then(
             () => {
