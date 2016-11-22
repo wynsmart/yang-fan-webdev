@@ -21,7 +21,7 @@
                 vm.error = 'password cannot be empty';
                 return;
             }
-            UserService.findUserByCredentials(vm.user.username, vm.user.password).then(
+            UserService.login(vm.user).then(
                 res => {
                     if (res.data) {
                         var uid = res.data._id;
@@ -54,7 +54,7 @@
                 username: vm.user.username,
                 password: vm.user.password,
             };
-            UserService.createUser(user).then(
+            UserService.register(user).then(
                 res => {
                     var uid = res.data._id;
                     $location.url(vm.shared.getRoute('profile', {uid: uid}));
@@ -74,6 +74,7 @@
                 click: () => updateUser(),
             },
         };
+        vm.logout = logout;
         vm.unregister = deleteUser;
 
         var uid = $routeParams.uid;
@@ -86,6 +87,15 @@
         function updateUser() {
             console.log('updating user');
             UserService.updateUser(vm.user._id, vm.user);
+        }
+
+        function logout() {
+            console.log('logging out');
+            UserService.logout().then(
+                () => {
+                    $location.url(vm.shared.getRoute('login'));
+                }
+            );
         }
 
         function deleteUser() {

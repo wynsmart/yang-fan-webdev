@@ -50,10 +50,13 @@
     </form>
 
     <a class="btn btn-primary btn-block"
-       href="#{{model.shared.getRoute('website_list')}}">Websites</a>
+       href="#{{model.shared.getRoute('website_list')}}"
+    >Websites</a>
     <a class="btn btn-warning btn-block"
-       href="#{{model.shared.getRoute('login')}}">Logout</a>
+       ng-click="model.logout()"
+    >Logout</a>
     <a class="btn btn-danger btn-block"
-       ng-click="model.unregister()">Unregister</a>
+       ng-click="model.unregister()"
+    >Unregister</a>
 </div>
 <footer></footer>
