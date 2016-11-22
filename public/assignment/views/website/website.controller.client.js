@@ -42,6 +42,10 @@
 
         function createWebsite() {
             console.log('creating website');
+            if (!vm.website.name) {
+                vm.error = 'name is required';
+                return;
+            }
             WebsiteService.createWebsite(uid, vm.website).then(
                 res => {
                     vm.websites.push(res.data);
@@ -73,6 +77,10 @@
 
         function updateWebsite(website) {
             console.log('updating website');
+            if (!vm.website.name) {
+                vm.error = 'name is required';
+                return;
+            }
             WebsiteService.updateWebsite(vm.website._id, website);
         }
 

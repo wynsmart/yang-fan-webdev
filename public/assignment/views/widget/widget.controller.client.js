@@ -119,6 +119,10 @@
 
         function updateWidget() {
             console.log('updating widget');
+            if (!vm.widget.name) {
+                vm.error = 'name is required';
+                return;
+            }
             WidgetService.updateWidget(wgid, vm.widget).then(
                 () => {
                     $location.url(vm.shared.getRoute('widget_list'));

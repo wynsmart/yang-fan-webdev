@@ -31,6 +31,11 @@
             <website-list-content></website-list-content>
         </div>
         <div class="col-md-8">
+            <div class="alert alert-danger"
+                 role="alert"
+                 ng-if="model.error"
+            >{{model.error}}
+            </div>
             <form>
                 <div class="form-group">
                     <label for="website-name">Website Name</label>

@@ -43,6 +43,10 @@
 
         function createPage() {
             console.log('creating page');
+            if (!vm.page.name) {
+                vm.error = 'name is required';
+                return;
+            }
             var wid = $routeParams.wid;
             PageService.createPage(wid, vm.page).then(
                 res => {
@@ -77,6 +81,10 @@
 
         function updatePage() {
             console.log('updating page');
+            if (!vm.page.name) {
+                vm.error = 'name is required';
+                return;
+            }
             PageService.updatePage(pid, vm.page).then(
                 res => {
                     $location.url(vm.shared.getRoute('page_list'));

@@ -14,11 +14,11 @@
         function login() {
             console.log('logging in');
             if (!vm.user.username) {
-                vm.error = 'username cannot be empty';
+                vm.error = 'username is required';
                 return;
             }
             if (!vm.user.password) {
-                vm.error = 'password cannot be empty';
+                vm.error = 'password is required';
                 return;
             }
             UserService.login(vm.user).then(
@@ -45,12 +45,16 @@
 
         function register() {
             console.log('registering');
+            if (!vm.user.username) {
+                vm.error = 'username is required';
+                return;
+            }
             if (vm.user.password !== vm.user.password2) {
                 vm.error = 'The two passwords are not identical';
                 return;
             }
             if (!vm.user.password) {
-                vm.error = 'Password cannot be empty';
+                vm.error = 'Password is required';
                 return;
             }
             var user = {

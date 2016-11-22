@@ -1,6 +1,12 @@
 <header></header>
 
 <div class="container-fluid">
+    <div class="alert alert-danger"
+         role="alert"
+         ng-if="model.error"
+    >{{model.error}}
+    </div>
+
     <div ng-if="model.widget"
          ng-include="model.getTemplateSrc()"
     ></div>
