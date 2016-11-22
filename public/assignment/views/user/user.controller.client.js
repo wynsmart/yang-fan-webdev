@@ -29,6 +29,9 @@
                     } else {
                         vm.error = 'Incorrect username or password';
                     }
+                },
+                err => {
+                    vm.error = 'Incorrect username or password';
                 }
             );
         }
