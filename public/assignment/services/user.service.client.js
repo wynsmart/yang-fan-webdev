@@ -14,6 +14,7 @@
             login: login,
             logout: logout,
             register: register,
+            currentUser: currentUser,
         };
 
         function createUser(user) {
@@ -38,6 +39,10 @@
 
         function login(user) {
             return $http.post("/api/login", user);
+        }
+
+        function currentUser() {
+            return $http.get('/api/currentuser');
         }
 
         function logout() {

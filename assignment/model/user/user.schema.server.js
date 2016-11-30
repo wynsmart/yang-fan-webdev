@@ -8,5 +8,9 @@ module.exports = function (db) {
         phone: String,
         websites: [{type: db.Schema.ObjectId, ref: 'WebsiteModel'}],
         dateCreated: {type: Date, default: Date.now},
+        facebook: {
+            id: String,
+            token: String
+        },
     });
 }

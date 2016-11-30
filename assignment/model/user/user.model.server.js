@@ -9,6 +9,7 @@ module.exports = function (db) {
         findUserByCredentials: findUserByCredentials,
         updateUser: updateUser,
         deleteUser: deleteUser,
+        findUserByFacebookId: findUserByFacebookId,
     };
 
     function createUser(user) {
@@ -39,4 +40,9 @@ module.exports = function (db) {
         console.log('deleting user:', userId);
         return UserModel.remove({_id: userId});
     }
+
+    function findUserByFacebookId(facebookId) {
+        return UserModel.findOne({'facebook.id': facebookId});
+    }
+
 };

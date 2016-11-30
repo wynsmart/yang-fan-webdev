@@ -38,6 +38,12 @@
                 controllerAs: "model",
                 resolve: {loggedin: checkLoggedin},
             })
+            .when(routeMap.user, {
+                templateUrl: "views/user/profile.view.client.html",
+                controller: "ProfileController",
+                controllerAs: "model",
+                resolve: {loggedin: checkLoggedin},
+            })
             .when(routeMap.website_list, {
                 templateUrl: "views/website/website-list.view.client.html",
                 controller: "WebsiteListController",

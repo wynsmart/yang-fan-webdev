@@ -22,6 +22,58 @@ module.exports = function (app, models) {
         );
     }
 
+    var FacebookStrategy = require('passport-facebook').Strategy;
+    app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/assignment/#/user',
+            failureRedirect: '/assignment/#/login'
+        })
+    );
+    var facebookConfig = {
+        clientID: '225445621218181',
+        clientSecret: '8386ac1657704cbf0ecfff26fda654e3',
+        callbackURL: '/auth/facebook/callback',
+    };
+    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
+    function facebookStrategy(token, refreshToken, profile, done) {
+        models.user.findUserByFacebookId(profile.id)
+            .then(
+                user => {
+                    console.log('fb callback:', token, refreshToken, profile);
+                    if (user) {
+                        return done(null, user);
+                    } else {
+                        var newUser = {
+                            username: profile.username,
+                            firstName: profile.name.givenName,
+                            lastName: profile.name.familyName,
+                            facebook: {
+                                id: profile.id,
+                                token: token,
+                            },
+                        };
+                        return models.user.createUser(newUser);
+                    }
+                },
+                err => {
+                    if (err) {
+                        return done(err);
+                    }
+                }
+            )
+            .then(
+                user => {
+                    return done(null, user);
+                },
+                err => {
+                    if (err) {
+                        return done(err);
+                    }
+                }
+            );
+    }
+
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
 
@@ -41,11 +93,12 @@ module.exports = function (app, models) {
     }
 
     app.get('/api/loggedin', loggedin);
-    app.post('/api/login', passport.authenticate('local'), login);
+    app.post('/api/login', passport.authenticate('local'), currentUser);
     app.post('/api/logout', logout);
     app.post('/api/register', register);
 
     app.post('/api/user', auth, createUser);
+    app.get('/api/currentuser', auth, currentUser);
     app.get('/api/user', auth, findUserByCredentials);
     app.get('/api/user/:uid', auth, findUserById);
     app.put('/api/user/:uid', auth, updateUser);
@@ -63,7 +116,7 @@ module.exports = function (app, models) {
         res.send(req.isAuthenticated() ? req.user : '0');
     }
 
-    function login(req, res) {
+    function currentUser(req, res) {
         var user = req.user;
         res.json(user);
     }

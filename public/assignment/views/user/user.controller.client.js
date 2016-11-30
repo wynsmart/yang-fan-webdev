@@ -84,12 +84,19 @@
         vm.logout = logout;
         vm.unregister = deleteUser;
 
-        var uid = $routeParams.uid;
-        UserService.findUserById(uid).then(
-            res => {
-                vm.user = res.data;
-            }
-        );
+        if ($routeParams.uid === undefined) {
+            UserService.currentUser().then(
+                res => {
+                    vm.user = res.data;
+                }
+            );
+        } else {
+            UserService.findUserById($routeParams.uid).then(
+                res => {
+                    vm.user = res.data;
+                }
+            );
+        }
 
         function updateUser() {
             console.log('updating user');
