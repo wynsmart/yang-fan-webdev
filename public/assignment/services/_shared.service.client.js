@@ -7,8 +7,8 @@
         var routeMap = {
             login: '/login',
             register: '/register',
-            profile: '/user',
-            user: '/user/:uid',
+            user: '/user',
+            profile: '/user/:uid',
             website_list: '/user/:uid/website',
             website_new: '/user/:uid/website/new',
             website_edit: '/user/:uid/website/:wid',

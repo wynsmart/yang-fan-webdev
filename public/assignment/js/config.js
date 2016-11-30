@@ -32,13 +32,13 @@
                 controller: "RegisterController",
                 controllerAs: "model",
             })
-            .when(routeMap.profile, {
+            .when(routeMap.user, {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",
                 resolve: {loggedin: checkLoggedin},
             })
-            .when(routeMap.user, {
+            .when(routeMap.profile, {
                 templateUrl: "views/user/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",

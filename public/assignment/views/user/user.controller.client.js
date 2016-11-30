@@ -87,7 +87,8 @@
         if ($routeParams.uid === undefined) {
             UserService.currentUser().then(
                 res => {
-                    vm.user = res.data;
+                    var user = res.data;
+                    $location.url(vm.shared.getRoute('profile', {uid: user._id}));
                 }
             );
         } else {
