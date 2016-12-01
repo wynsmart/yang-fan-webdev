@@ -89,9 +89,20 @@
                     'Reached 1.28K downloads in months by users from all over the world',
                 ],
             },
+            {
+                name: 'EELAB Department Portal (http://eel.xmu.edu.cn)',
+                institution: 'Xiamen University, Xiamen, China',
+                date: 'July 2013',
+                achievements: [
+                    'Developed and published online a website for Electronic Engineering Laboratory of Xiamen University',
+                    'Implemented with HTML, CSS and JavaScript for front-end; PHP for back-end; MySQL for database; Adobe Photoshop for UI design, and Apache PHP for server hosting',
+                    'Provided management portal for administrators to post new articles and maintain the website',
+                    'Implemented a Rich-Text Editor using HTML ‘contentEditable’ and JavaScript ‘execCommand’',
+                ],
+            },
         ];
         vm.interests = [
-            'Learning latest technology, and apply them into real life to improve working experience and efficiency',
+            'Learning latest technology, and applying them into real life to improve working experience and efficiency',
             'Developed a homepage for my clan of the game Clash of Clans (http://thelokis.getforge.io)',
         ];
     }

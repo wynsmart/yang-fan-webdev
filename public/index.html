@@ -72,8 +72,9 @@
     </div>
     <div class="section-title">EXPERIENCE</div>
     <div ng-repeat="exp in model.experience">
+        <div class="section-subtitle">{{exp.title}}</div>
         <div class="clearfix">
-            <div class="pull-left section-subtitle">{{exp.institution}}</div>
+            <div class="pull-left">{{exp.institution}}</div>
             <div class="pull-right">{{exp.date}}</div>
         </div>
         <ul ng-repeat="item in exp.achievements">
@@ -82,50 +83,18 @@
     </div>
     <div class="section-title">ACADEMIC PROJECTS</div>
     <div ng-repeat="project in model.projects">
+        <div class="section-subtitle">{{project.name}}</div>
         <div class="clearfix">
-            <div class="pull-left section-subtitle">{{project.institution}}</div>
+            <div class="pull-left">{{project.institution}}</div>
             <div class="pull-right">{{project.date}}</div>
         </div>
         <ul ng-repeat="item in project.achievements">
             <li>{{item}}</li>
         </ul>
     </div>
-    <div class="section-title">INTERESTS/ACTIVITIES</div>
+    <div class="section-title">INTERESTS / ACTIVITIES</div>
     <ul>
         <li ng-repeat="item in model.interests">{{item}}</li>
-    </ul>
-</div>
-------------
-<div class="container-fluid">
-
-    <p>
-        Your home page should have:
-    <ul>
-        <li>a picture of yourself</li>
-        <li>link to your assignments</li>
-        <li>link to your final project implementation on OpenShift</li>
-        <li>link to your GitHub</li>
-        <li>link to a 5 minute video demoing your project</li>
-    </ul>
-    Your home page should look spectacular. You should feel proud to share your home page with your potential employer.
-    I
-    should feel proud to share your home page with my colleagues.
-    </p>
-
-    <h2>Required links</h2>
-    <ul>
-        <li>
-            <a href="project/index.html">Project</a>
-        </li>
-        <li>
-            <a href="assignment/index.html">Assignment</a>
-        </li>
-        <li>
-            <a href="test/index.html">Test MongoDB</a>
-        </li>
-        <li>
-            <a href="https://github.com/wynsmart/yang-fan-webdev">Your public repository at GitHub.com</a>
-        </li>
     </ul>
 </div>
 </body>
