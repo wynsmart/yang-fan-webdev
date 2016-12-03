@@ -3,7 +3,7 @@
         .module("WebAppMaker")
         .factory("SharedService", SharedService);
 
-    function SharedService($routeParams, $http) {
+    function SharedService($routeParams) {
         var routeMap = {
             login: '/login',
             register: '/register',
