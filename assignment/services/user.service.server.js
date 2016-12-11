@@ -97,16 +97,17 @@ module.exports = function (app, models) {
     app.post('/api/logout', logout);
     app.post('/api/register', register);
 
-    app.post('/api/user', auth, createUser);
-    app.get('/api/currentuser', auth, currentUser);
-    app.get('/api/user', auth, findUserByCredentials);
-    app.get('/api/user/:uid', auth, findUserById);
-    app.put('/api/user/:uid', auth, updateUser);
-    app.delete('/api/user/:uid', auth, deleteUser);
+    app.all('/api/\*', auth);
+    app.post('/api/user', createUser);
+    app.get('/api/currentuser', currentUser);
+    app.get('/api/user', findUserByCredentials);
+    app.get('/api/user/:uid', findUserById);
+    app.put('/api/user/:uid', updateUser);
+    app.delete('/api/user/:uid', deleteUser);
 
     function auth(req, res, next) {
         if (!req.isAuthenticated()) {
-            res.sendStatus(204);
+            res.sendStatus(401);
         } else {
             next();
         }

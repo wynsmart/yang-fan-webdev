@@ -39,8 +39,17 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li ng-repeat="link in model.links">
-                    <a href="{{link.href}}" target="_blank">{{link.text}}</a>
+                <li class="dropdown" ng-repeat="(group, links) in model.dropdowns">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">{{group}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="(text, href) in links">
+                            <a href="{{href}}" target="_blank">{{text}}</a>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-repeat="(text, href) in model.links">
+                    <a href="{{href}}" target="_blank">{{text}}</a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->

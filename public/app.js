@@ -5,13 +5,20 @@
 
     function MyAppController() {
         var vm = this;
-        vm.links = [
-            {text: 'Assignment', href: '/assignment'},
-            {text: 'Project', href: '/project'},
-            {text: 'Demo Video', href: '#'},
-            {text: 'MongoDB Test', href: '/test'},
-            {text: 'GitHub.com', href: 'https://github.com/wynsmart/yang-fan-webdev'},
-        ];
+        vm.dropdowns = {
+            Assignment: {
+                Preview: '/assignment',
+                'Source Code': 'https://github.com/wynsmart/yang-fan-webdev',
+            },
+            Project: {
+                Preview: 'http://ec2-54-70-113-60.us-west-2.compute.amazonaws.com:8080',
+                'Source Code': 'https://github.com/wynsmart/emustock',
+                'Demo Video': '#',
+            },
+        };
+        vm.links = {
+            'MongoDB Test': '/test',
+        };
         vm.profileImg = './profile.jpg';
         vm.name = 'Fan Yang';
         vm.linkedin = 'https://www.linkedin.com/in/fan-yang-38a70984';

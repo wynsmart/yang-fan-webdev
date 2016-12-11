@@ -1,8 +1,8 @@
 (function () {
     angular
         .module("WebAppMaker")
-        .directive('header', Header)
-        .directive('footer', Footer)
+        .directive('webHeader', Header)
+        .directive('webFooter', Footer)
         .directive('websiteListHeader', WebsiteListHeader)
         .directive('websiteListContent', WebsiteListContent);
 
