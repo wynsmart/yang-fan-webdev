@@ -1,10 +1,42 @@
 module.exports = function (app, models) {
 
     var passport = require('passport');
-    var LocalStrategy = require('passport-local').Strategy;
     var bcrypt = require("bcrypt-nodejs");
+    var LocalStrategy = require('passport-local').Strategy;
+    var FacebookStrategy = require('passport-facebook').Strategy;
+    var facebookConfig = {
+        clientID: '225445621218181',
+        clientSecret: '8386ac1657704cbf0ecfff26fda654e3',
+        callbackURL: '/auth/facebook/callback',
+    };
+
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
 
     passport.use(new LocalStrategy(localStrategy));
+    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
+
+    app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/assignment/#/user',
+            failureRedirect: '/assignment/#/login'
+        })
+    );
+
+    app.get('/api/loggedin', loggedin);
+    app.post('/api/login', passport.authenticate('local'), currentUser);
+    app.post('/api/logout', logout);
+    app.post('/api/register', register);
+
+    app.all('/api/\*', auth);
+    app.post('/api/user', createUser);
+    app.get('/api/currentuser', currentUser);
+    app.get('/api/user', findUserByCredentials);
+    app.get('/api/user/:uid', findUserById);
+    app.put('/api/user/:uid', updateUser);
+    app.delete('/api/user/:uid', deleteUser);
+
     function localStrategy(username, password, done) {
         models.user.findUserByUsername(username).then(
             function (user) {
@@ -22,20 +54,6 @@ module.exports = function (app, models) {
         );
     }
 
-    var FacebookStrategy = require('passport-facebook').Strategy;
-    app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
-    app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {
-            successRedirect: '/assignment/#/user',
-            failureRedirect: '/assignment/#/login'
-        })
-    );
-    var facebookConfig = {
-        clientID: '225445621218181',
-        clientSecret: '8386ac1657704cbf0ecfff26fda654e3',
-        callbackURL: '/auth/facebook/callback',
-    };
-    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
     function facebookStrategy(token, refreshToken, profile, done) {
         models.user.findUserByFacebookId(profile.id)
             .then(
@@ -74,9 +92,6 @@ module.exports = function (app, models) {
             );
     }
 
-    passport.serializeUser(serializeUser);
-    passport.deserializeUser(deserializeUser);
-
     function serializeUser(user, done) {
         done(null, user);
     }
@@ -91,19 +106,6 @@ module.exports = function (app, models) {
             }
         );
     }
-
-    app.get('/api/loggedin', loggedin);
-    app.post('/api/login', passport.authenticate('local'), currentUser);
-    app.post('/api/logout', logout);
-    app.post('/api/register', register);
-
-    app.all('/api/\*', auth);
-    app.post('/api/user', createUser);
-    app.get('/api/currentuser', currentUser);
-    app.get('/api/user', findUserByCredentials);
-    app.get('/api/user/:uid', findUserById);
-    app.put('/api/user/:uid', updateUser);
-    app.delete('/api/user/:uid', deleteUser);
 
     function auth(req, res, next) {
         if (!req.isAuthenticated()) {
