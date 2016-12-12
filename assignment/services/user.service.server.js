@@ -8,6 +8,7 @@ module.exports = function (app, models) {
         clientID: '225445621218181',
         clientSecret: '8386ac1657704cbf0ecfff26fda654e3',
         callbackURL: '/auth/facebook/callback',
+        profileFields: ['displayName', 'name', 'email'],
     };
 
     passport.serializeUser(serializeUser);
@@ -63,9 +64,10 @@ module.exports = function (app, models) {
                         return done(null, user);
                     } else {
                         var newUser = {
-                            username: profile.username,
-                            firstName: profile.name.givenName,
-                            lastName: profile.name.familyName,
+                            username: profile._json.name,
+                            firstName: profile._json.first_name,
+                            lastName: profile._json.last_name,
+                            email: profile._json.email,
                             facebook: {
                                 id: profile.id,
                                 token: token,
