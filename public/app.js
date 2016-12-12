@@ -7,14 +7,13 @@
         var vm = this;
         vm.dropdowns = {
             Assignment: {
-                Preview: '/assignment',
-                'Source Code': 'https://github.com/wynsmart/yang-fan-webdev',
+                'Website': '/assignment',
+                'GitHub.com': 'https://github.com/wynsmart/yang-fan-webdev',
             },
             Project: {
-                Preview: 'http://ec2-54-70-113-60.us-west-2.compute.amazonaws.com:8080',
-                'Source Code': 'https://github.com/wynsmart/emustock',
-                'README': 'https://docs.google.com/document/d/1U5iJ8ODmOl0prdQHBIjg3bB-zX1dGcAFwzG6Wtet9uY/edit?usp=sharing_eixpa_nl&ts=584cdd71',
-                'Demo Video': '#',
+                'Website': 'http://ec2-54-70-113-60.us-west-2.compute.amazonaws.com:8080',
+                'GitHub.com': 'https://github.com/wynsmart/emustock',
+                'Documentation': 'https://docs.google.com/document/d/1U5iJ8ODmOl0prdQHBIjg3bB-zX1dGcAFwzG6Wtet9uY/edit?usp=sharing_eixpa_nl&ts=584cdd71',
             },
         };
         vm.links = {
